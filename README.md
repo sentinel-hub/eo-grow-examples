@@ -8,7 +8,8 @@ Analyzing Earth Observation (EO) data is complex and solutions often require cus
 
 The examples in this repository are fully self contained in corresponding sub-directories. Each example has instructions on how to set-up a working environment, and (typically) an end-to-end notebook that user can tweak according to their needs. 
 
-_TODO: add examples, linking to each `README`_ 
+Current examples are limited to [`GlobalEarthMonitor`](./GEM/README.md) spot-mode monitoring, but more will follow.
+
 
 ## Installation and running of examples
 
