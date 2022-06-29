@@ -1,0 +1,15 @@
+[tool.black]
+line-length = 120
+preview = true
+
+[tool.isort]
+profile = "black"
+known_first_party = ["sentinelhub", "eolearn"]
+known_absolute = "eogrow"
+sections = ["FUTURE","STDLIB","THIRDPARTY","FIRSTPARTY","ABSOLUTE","LOCALFOLDER"]
+line_length = 120
+
+[tool.nbqa.addopts]
+flake8 = [
+    "--extend-ignore=E402"
+]
