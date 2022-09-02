@@ -84,11 +84,11 @@ These two example files are also available in the repository.
 
 When logged in to the AWS management console, navigate to the `Amazon Elastic Container Registry`.  Once there, only two steps are needed for the basic functionality that we need: 
 
-|                                                              |                                                              |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Click on the "Create repository button"                      | ![](/home/nvesel/Documents/eo-grow-examples/GEM/infrastructure/figs/create-repository.png) |
-| Choose a custom name of your ECR repository and click on "Create repository" | ![](/home/nvesel/Documents/eo-grow-examples/GEM/infrastructure/figs/create-repo-page.png) |
-| Your ECR repository will now be available via the URL listed. In our example case we created an ECR with a custom name `eo-grow-examples-example`. | ![](/home/nvesel/Documents/eo-grow-examples/GEM/infrastructure/figs/ecrs.png) |
+|                                                              |                                 |
+| ------------------------------------------------------------ | ------------------------------- |
+| Click on the "Create repository button"                      | ![](figs/create-repository.png) |
+| Choose a custom name of your ECR repository and click on "Create repository" | ![](figs/create-repo-page.png)  |
+| Your ECR repository will now be available via the URL listed. In our example case we created an ECR with a custom name `eo-grow-examples-example`. | ![](figs/ecrs.png)              |
 
 ### Pushing an image to the  ECR repository 
 
