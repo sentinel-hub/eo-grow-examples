@@ -1,0 +1,9 @@
+{
+  "pipeline": "eogrow.pipelines.byoc.IngestByocTilesPipeline",
+  "**global_config": "${config_path}/../global_config.json",
+  "byoc_tile_folder_key": "maps",
+  "new_collection_name": "GEM eo-grow example predictions",
+  "sensing_time": "2019-12-31",
+  "cover_geometry_folder_key": "input_data",
+  "cover_geometry": "aoi_region.geojson"
+}

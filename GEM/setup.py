@@ -29,6 +29,5 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=parse_requirements("requirements.txt"),
-    extras_require={"DEV": parse_requirements("requirements-dev.txt")},
     zip_safe=False,
 )

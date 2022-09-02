@@ -1,0 +1,36 @@
+{
+  "variables": {
+    "year": 2020
+  },
+  "storage": {
+    "manager": "eogrow.core.storage.StorageManager",
+    "project_folder": "s3://<your bucket>", // the bucket needs to be properly configured for Sentinel Hub Batch API
+    "structure": {
+      "data": "data/${var:year}",  // uses the 2020 defined in "variables"
+      "tiffs": "tiffs/${var:year}",
+      "features": "features/${var:year}",
+      "features_sampled": "features-sampled/${var:year}",
+      "raster_reference": "raster-reference",
+      "training": "training-data",
+      "models": "models",
+      "predictions": "predictions",
+      "maps": "maps"
+    }
+  },
+  "area": {
+    "manager": "eogrow.core.area.BatchAreaManager",
+    "area_filename": "aoi_region.geojson",
+    "tiling_grid_id": 2,
+    "resolution": 120,
+    "tile_buffer_x": 10,
+    "tile_buffer_y": 10
+  },
+  "eopatch": {
+    "manager": "eogrow.core.eopatch.BatchTileManager"
+  },
+  "logging": {
+    "manager": "eogrow.core.logging.LoggingManager",
+    "save_logs": true,
+    "show_logs": true
+  }
+}
