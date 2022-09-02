@@ -1,7 +1,5 @@
 FROM rayproject/ray:latest-py39-cpu
 
-LABEL maintainer="Sinergise EO research team <eoresearch@sinergise.com>"
-
 ARG SH_CLIENT_ID
 ARG SH_CLIENT_SECRET
 ARG EOGROW_EXAMPLES_BRANCH
