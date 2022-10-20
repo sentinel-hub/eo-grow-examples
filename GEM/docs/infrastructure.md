@@ -1,21 +1,29 @@
-# Infrastructure setup 
+![GEM](docs/figs/gem.png)
 
-One of the  main capabilities of `eo-grow` is it's ability to utilize cheap AWS spot instances together with the `Ray` processing framework to perform processing on a large scale. This document outlines the steps needed to setup the infrastructure needed for the cloud processing. 
+# Setting up the infrastructure for large-scale processing 
+
+One of the  main capabilities of `eo-grow` is its ability to utilize cheap AWS spot instances together with the `Ray` 
+processing framework to perform processing on a large scale. This document outlines the steps needed to set up the 
+infrastructure needed for the cloud processing. 
 
 # Main steps 
 
-The following main steps are needed to setup the infrastructure: 
+The following main steps are needed to set up the infrastructure: 
 
 1. Create an AWS [AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html) on which the Docker image will be run. 
 2. Create a Docker image and push it to [AWS Elastic Container Registry](https://aws.amazon.com/ecr/). 
-3. Setup the `cluster.yaml` specifying the configuration for the cloud processing. 
+3. Set up the `cluster.yaml` specifying the configuration for the cloud processing. 
 4. Run an eo-grow pipeline with the cluster configuration. 
 
 We explain the steps in more detail below. 
 
 ## Creating an AWS AMI
 
-To make the process configurable and machine-runnable we use [Packer](https://www.packer.io/) (free and open source tool  used for creating images on multiple platforms), including AWS. We write a `packer.json`file which we use to programatically create an AMI image on AWS. Below we provide a template file that can be used as a starting point for your own file. Values marked as `<< >>` are the ones that need to be filled out to correctly build the AMI image. If you have access to an existing AMI with Docker preinstalled this step can be skipped. 
+To make the process configurable and machine-runnable we use [Packer](https://www.packer.io/) (free and open source 
+tool used for creating images on multiple platforms), including AWS. We write a `packer.json`file which we use to 
+programmatically create an AMI image on AWS. Below we provide a template file that can be used as a starting point for 
+your own file. Values marked as `<< >>` are the ones that need to be filled out to correctly build the AMI image. 
+If you have access to an existing AMI with Docker preinstalled this step can be skipped. 
 
 ```json
 {
@@ -82,7 +90,8 @@ These two example files are also available in the repository.
 
 ### Creating an ECR repository 
 
-When logged in to the AWS management console, navigate to the `Amazon Elastic Container Registry`.  Once there, only two steps are needed for the basic functionality that we need: 
+When logged in to the AWS management console, navigate to the `Amazon Elastic Container Registry`.  Once there, only 
+two steps are needed for the basic functionality that we need: 
 
 |                                                              |                                 |
 | ------------------------------------------------------------ | ------------------------------- |
@@ -92,9 +101,10 @@ When logged in to the AWS management console, navigate to the `Amazon Elastic Co
 
 ### Pushing an image to the  ECR repository 
 
-To push an image to the ECR repository, we need to have a valid Dockerfile (provided in the repository) that we push with the following commands: 
+To push an image to the ECR repository, we need to have a valid Dockerfile (provided in the repository) that we push 
+with the following commands: 
 
-```
+```dockerfile
 aws configure set aws_access_key_id <<AWS ACCESS KEY ID>>
 aws configure set aws_secret_access_key <<AWS SECRET ACCESS_KEY>>
 aws configure set region <<AWS REGION>>
@@ -116,7 +126,10 @@ Once this has been done, your Docker image is available under the following URL 
 
 ## Preparing the cluster.yaml file
 
-We have prepared a template for the `cluster.yaml` file that can be used for running `eo-grow` pipelines on the cloud. As before, the values marked inside `<< >>` need to be set by the user. The number of workers (instances) and their type can be controlled through the  `max_workers` parameter in the root and under the `ray.worker` section of the configuration file. This should depend on the specifics of your pipeline and on the scale.
+We have prepared a template for the `cluster.yaml` file that can be used for running `eo-grow` pipelines on the cloud. 
+As before, the values marked inside `<< >>` need to be set by the user. The number of workers (instances) and their 
+type can be controlled through the  `max_workers` parameter in the root and under the `ray.worker` section of the 
+configuration file. This should depend on the specifics of your pipeline and on the scale.
 
 ```yaml
 # For info about parameters check https://docs.ray.io/en/latest/cluster/config.html#full-configuration
@@ -198,14 +211,22 @@ worker_nodes: {}
 
 ## Running en eo-grow pipeline on the cluster
 
-After the `cluster.yaml`file has been specified we can simply run it by calling the `eogrow-ray` command and specifying the cluster configuration and the pipeline config. For example: 
+After the `cluster.yaml` file has been specified we can simply run it by calling the `eogrow-ray` command and 
+specifying the cluster configuration and the pipeline config. For example: 
 
-`eogrow-ray infrastructure/cluster.yaml config_files/sampling/sampling.json --start`
+```bash
+eogrow-ray infrastructure/cluster.yaml config_files/sampling/sampling.json --start
+```
 
 We can then check the execution status by calling:
 
- `ray attach infrastructure/cluster.yaml`
+```bash
+ray attach infrastructure/cluster.yaml
+```
 
-which should open up the console.  Once execution has finished, the workers are shut down automatically, but we need to shut down  the head node manually by calling `ray down` and specifying the `cluster.yaml` configuration. For example:  
+which should open up the console.  Once execution has finished, the workers are shut down automatically, but we need 
+to shut down  the head node manually by calling `ray down` and specifying the `cluster.yaml` configuration. For example:  
 
-`ray down infrastructure/cluster.yaml`
+```bash
+ray down infrastructure/cluster.yaml
+```

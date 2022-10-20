@@ -1,9 +1,17 @@
-# GEM monitoring
-
+![GEM](docs/figs/gem.png)
 
 ## Introduction
 
-_TODO_
+Within GEM project we have updated and extended [`eo-learn`](https://eo-learn.readthedocs.org) with additional 
+functionalities that allow for new approaches to scalable and cost-effective Earth Observation data processing. 
+We have tied it with the Sentinel Hub’s unified main data interface (Process API), the Data Cube processing engine for 
+constructing analysis ready adjustable data cubes using Batch Process API and finally the Statistical API to streamline 
+access to spatio-temporally aggregated satellite data. 
+
+To facilitate scaling up activities, a novel EO framework for scaled-up processing in Python named 
+[`eo-grow`](https://eo-grow.readthedocs.org) has been openly released. It relies on `eo-learn` package and takes care 
+of running the solutions at a large scale with [Ray](https://ray.io).
+
 
 ## Requirements
 
@@ -24,14 +32,15 @@ cost-effective solution to use for large-scale processing
   2) A slimmed-down EO workflow using a Jupyter notebook using `eo-grow` without Ray, which is small enough to be run
 on a laptop
 
-Both demonstrations are self-contained. To set up the working environment, the following should be sufficient:
+Both demonstrations are self-contained. To set up the working environment for running the example locally, the following 
+should be sufficient:
 
 ```
 pip install -r requirements.txt
 ```
 
 Then, we invite the user to:   
-  1) Head over to [`using eo-grow with Ray`](./eogrow_ray.md) for details about full large-scale processing demo
+  1) Head over to [`using eo-grow with Ray`](./docs/eogrow_ray.md) for details about full large-scale processing demo
   2) open the [`example notebook`](./example_notebook.ipynb) for running small example on your laptop.
 
 
