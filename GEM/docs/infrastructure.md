@@ -23,7 +23,7 @@ To make the process configurable and machine-runnable we use [Packer](https://ww
 tool used for creating images on multiple platforms), including AWS. We write a `packer.json`file which we use to 
 programmatically create an AMI image on AWS. Below we provide a template file that can be used as a starting point for 
 your own file. Values marked as `<< >>` are the ones that need to be filled out to correctly build the AMI image. 
-If you have access to an existing AMI with Docker preinstalled this step can be skipped. 
+If you have access to an existing AMI with Docker pre-installed this step can be skipped. 
 
 ```json
 {
@@ -113,16 +113,16 @@ aws ecr get-login-password | docker login
         --password-stdin <<OWNER AWS ACCOUNT ID>>.dkr.ecr.eu-central-1.amazonaws.com
     - docker build --no-cache -f=./Dockerfile --tag=<<USER SPECIFIED IMAGE TAG>>
         --build-arg SH_CLIENT_ID=<<YOUR SH CLIENT ID>>
-        --build-arg SH_CLIENT_SECRET=<<YOUr SH CLIENT SECRET>>
-        --build-arg EOGROW_EXAMPLES_BRANCH=<<THE BRANCH OF THIS REPOSITORY, USALLY MAIN>>
-    - docker tag <<USER SPECIFIED IMAGE TAG (SAME AS ABOVE)>> <<OWNER AWS ACCOUNT ID}>>.dkr.ecr.eu-central-1.amazonaws.com/ <<USER SPECIFIED IMAGE TAG (SAME AS ABOVE)>>
-    - docker push <<OWNER AWS ACCOUNT ID}>>.dkr.ecr.<<AWS REGION>>.amazonaws.com/<<USER SPECIFIED IMAGE TAG (SAME AS ABOVE)>>
+        --build-arg SH_CLIENT_SECRET=<<YOUR SH CLIENT SECRET>>
+        --build-arg EOGROW_EXAMPLES_BRANCH=<<THE BRANCH OF THIS REPOSITORY, USUALLY MAIN>>
+    - docker tag <<USER SPECIFIED IMAGE TAG (SAME AS ABOVE)>> <<OWNER AWS ACCOUNT ID>>.dkr.ecr.eu-central-1.amazonaws.com/<<USER SPECIFIED IMAGE TAG (SAME AS ABOVE)>>
+    - docker push <<OWNER AWS ACCOUNT ID>>.dkr.ecr.<<AWS REGION>>.amazonaws.com/<<USER SPECIFIED IMAGE TAG (SAME AS ABOVE)>>
     - echo <<USER SPECIFIED IMAGE TAG (SAME AS ABOVE)>>
 ```
 
 Once this has been done, your Docker image is available under the following URL : 
 
-` <<OWNER AWS ACCOUNT ID}>>.dkr.ecr.<<AWS REGION>>.amazonaws.com/<<USER SPECIFIED IMAGE TAG (SAME AS ABOVE)>>`
+`<<OWNER AWS ACCOUNT ID}>>.dkr.ecr.<<AWS REGION>>.amazonaws.com/<<USER SPECIFIED IMAGE TAG (SAME AS ABOVE)>>`
 
 ## Preparing the cluster.yaml file
 
