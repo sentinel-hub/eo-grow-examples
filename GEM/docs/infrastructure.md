@@ -1,8 +1,8 @@
-![GEM](docs/figs/gem.png)
+![GEM](figs/gem.png)
 
 # Setting up the infrastructure for large-scale processing 
 
-One of the  main capabilities of `eo-grow` is its ability to utilize cheap AWS spot instances together with the `Ray` 
+One of the  main capabilities of `eo-grow` is its ability to utilize low-cost AWS spot instances together with the `Ray` 
 processing framework to perform processing on a large scale. This document outlines the steps needed to set up the 
 infrastructure needed for the cloud processing. 
 
@@ -224,8 +224,8 @@ We can then check the execution status by calling:
 ray attach infrastructure/cluster.yaml
 ```
 
-which should open up the console.  Once execution has finished, the workers are shut down automatically, but we need 
-to shut down  the head node manually by calling `ray down` and specifying the `cluster.yaml` configuration. For example:  
+which should open up the console.  Once the execution has finished, the workers are shut down automatically, but we need 
+to shut down the head node manually by calling `ray down` and specifying the `cluster.yaml` configuration. For example:  
 
 ```bash
 ray down infrastructure/cluster.yaml

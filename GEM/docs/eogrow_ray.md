@@ -663,7 +663,7 @@ For instance, a nicer visualization of results, retrieved as WMS layer from QGIS
 
 The example showcases running an end to end generic EO workflow using `eo-grow` with Ray clusters on AWS 
 infrastructure. The `eo-grow` package, developed within the GEM project, is still in early stages, and can 
-be subjected to some significant changes in the near future. Nevertheless, the functionalities presented here 
+be subject to some significant changes in the near future. Nevertheless, the functionalities presented here 
 are the backbone of the EO workflows, so should be here to stay. 
 
 You are invited to take the example, adapt it to your needs, use it and possibly even contribute back, both 
