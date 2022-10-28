@@ -1,0 +1,41 @@
+{
+  "variables": {
+    "aws_access_key": "<< THE AWS_ACCESS_KEY OF THE AMI USER  >>",
+    "aws_secret_key": "<< THE AWS_SECRET_ACCESS_KEY OF THE AMI USER >>"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "<< THE AWS_ACCESS_KEY ?? >>",
+    "secret_key": "<< THE AWS_SECRET_ACCESS_KEY >>",
+    "region": "<< AWS REGION >>",
+    "source_ami_filter": {
+      "filters": {
+        "virtualization-type": "hvm",
+        "name": "ubuntu/images/*ubuntu-jammy-22.04-amd64-server-*",
+        "root-device-type": "ebs"
+      },
+      "owners": ["<<AWS ACCOOUNT IDs WITH ACCESS TO THE IMAGE>>"],
+      "most_recent": true
+    },
+    "instance_type": "t2.small",
+    "ssh_username": "ubuntu",
+    "ami_name": "<<NAME OF THE AMI>>",
+    "ami_regions": ["<<AWS REGION>>"]
+  }],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline_shebang": "/bin/bash -e",
+      "inline": [
+        "curl -fsSL https://get.docker.com -o get-docker.sh",
+        "sh get-docker.sh",
+        "sudo usermod -aG docker $USER",
+        "sudo systemctl restart docker -f",
+        "rm get-docker.sh",
+        "sudo apt-get install unzip -y",
+        "curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o awscliv2.zip",
+        "unzip awscliv2.zip && sudo ./aws/install && rm -rf ./aws*"
+      ]
+    }
+  ]
+}

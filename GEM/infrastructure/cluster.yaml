@@ -1,0 +1,75 @@
+# For info about parameters check https://docs.ray.io/en/latest/cluster/config.html#full-configuration
+
+cluster_name: gem-example-cluster
+
+max_workers: 10  # Max number of worker instances
+upscaling_speed: 1.0
+idle_timeout_minutes: 5
+
+docker:
+    image: <<The Docker image URL to the ECR (as specified in the section above)>>
+    container_name: "gem-example"
+    pull_before_run: True
+
+provider:
+    type: aws
+    region: eu-central-1 # !! Can also be other regions, if you are running elsewhere !! 
+    availability_zone: eu-central-1a,eu-central-1b,eu-central-1c
+    cache_stopped_nodes: False  # Change for terminating instances
+
+available_node_types:
+    ray.head:
+        min_workers: 0
+        max_workers: 0
+        node_config:
+            InstanceType: m5.2xlarge
+            ImageId: << ID OF THE AMI CREATED IN THE FIRST STEP>> 
+            BlockDeviceMappings:
+                - DeviceName: /dev/sda1
+                  Ebs:
+                      VolumeSize: 40        
+        resources: {"CPU": 1}
+    ray.worker:
+        min_workers: 0
+        max_workers: 40  # Max number of workers of this type
+        node_config:
+            InstanceType: c5.large
+            ImageId:  << ID OF THE AMI CREATED IN THE FIRST STEP>> 
+            InstanceMarketOptions:
+                MarketType: spot
+            BlockDeviceMappings:
+                - DeviceName: /dev/sda1
+                  Ebs:
+                    VolumeSize: 40
+        resources: {}
+
+head_node_type: ray.head
+
+file_mounts: {}
+cluster_synced_files: []
+file_mounts_sync_continuously: False
+rsync_exclude:
+    - "**/.git"
+    - "**/.git/**"
+rsync_filter:
+    - ".gitignore"
+
+initialization_commands:
+    - aws ecr get-login-password | docker login --username AWS --password-stdin <<AWS ACCOUNT>>.dkr.ecr.<<AWS REGION>>.amazonaws.com
+
+setup_commands: []
+
+head_setup_commands: []
+
+worker_setup_commands: []
+
+head_start_ray_commands:
+    - ray stop
+    - ulimit -n 65536; ray start --head --port=6379 --object-manager-port=8076 --autoscaling-config=~/ray_bootstrap_config.yaml
+
+worker_start_ray_commands:
+    - ray stop
+    - ulimit -n 65536; ray start --address=$RAY_HEAD_IP:6379 --object-manager-port=8076
+
+head_node: {}
+worker_nodes: {}
