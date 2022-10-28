@@ -2,6 +2,7 @@ import os
 
 from setuptools import find_packages, setup
 
+VERSION = 1.0
 
 def parse_requirements(file):
     required_packages = []
@@ -12,17 +13,10 @@ def parse_requirements(file):
     return required_packages
 
 
-def get_version():
-    for line in open(os.path.join(os.path.dirname(__file__), "example_package", "__init__.py")):
-        if line.find("__version__") >= 0:
-            version = line.split("=")[1].strip()
-            return version.strip('"').strip("'")
-
-
 setup(
-    name="example-package",
-    python_requires=">=3.8",
-    version=get_version(),
+    name="gem-example",
+    python_requires=">=3.9",
+    version=VERSION,
     description="eo-grow example for GEM project, using the GEM framework and services",
     author="Sinergise EO research team",
     author_email="eoresearch@sinergise.com",

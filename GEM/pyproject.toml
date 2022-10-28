@@ -4,8 +4,8 @@ preview = true
 
 [tool.isort]
 profile = "black"
-known_first_party = ["sentinelhub", "eolearn"]
-known_absolute = "eogrow"
+known_first_party = ["sentinelhub", "eolearn", "eogrow"]
+known_absolute = "gem_example"
 sections = ["FUTURE","STDLIB","THIRDPARTY","FIRSTPARTY","ABSOLUTE","LOCALFOLDER"]
 line_length = 120
 
