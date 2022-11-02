@@ -1,7 +1,7 @@
 [
-  {"**catalog_update": "${config_path}/01_catalog.json"},
-  {"**incremental_download": "${config_path}/02-incremental_download.json"},
-  {"**esa_worldcover": "${config_path}/03-download_ESA_worldcover.json"},
-  {"**compute_fractions_to_gpkg": "${config_path}/04-compute_fractions.json"}
+  {"**catalog_update": "${config_path}/update_catalog.json"},
+  {"**incremental_download": "${config_path}/incremental_download.json"},
+  {"**esa_worldcover": "${config_path}/download_nominal_features.json"},
+  {"**compute_fractions_to_gpkg": "${config_path}/compute_indicators.json"}
 ]
 

@@ -217,7 +217,8 @@ deployment is extracted in an end-to-end[`continuous_monitoring_end2end.json`](.
 config, where the pipelines are chained into one run:
 
 ```json
-[{"**catalog_update": "${config_path}/update_catalog.json"},
+[
+  {"**catalog_update": "${config_path}/update_catalog.json"},
   {"**incremental_download": "${config_path}/incremental_download.json"},
   {"**esa_worldcover": "${config_path}/download_nominal_features.json"},
   {"**compute_fractions_to_gpkg": "${config_path}/compute_indicators.json"}
