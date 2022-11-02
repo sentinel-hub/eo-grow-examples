@@ -31,7 +31,7 @@ The main parts of the configuration are the specifications of the managers, Pyth
 linking the area of interest with `EOPatches` and logging manager. 
 
 In this example, the parameters for these managers are specified in the 
-[`global_config.json`](../config_files/global_config.json) file. Let's take a closer look.
+[`global_config.json`](../config_files/large_scale_processing/global_config.json) file. Let's take a closer look.
 
 ### Storage Manager
 
@@ -70,7 +70,7 @@ suitable to document the parts:
 }
 ```
 
-Particularly the `StorageManager` is responsible for well structured experiments when doing research. 
+Particularly the `StorageManager` is responsible for well-structured experiments when doing research. 
 All the sub-folders of the project are reflected by the manager, in the code referenced by the keys 
 from the config, and the config itself provides a description of where is (what kind of) data.
 
@@ -160,7 +160,7 @@ and give you the command-line instructions to test and run the pipeline.
 ### Pipeline 1 - Creating the Data Cube
 
 In this first pipeline we will make use of Sentinel Hub Batch Processing API to request satellite data 
-over AOI and selected time period. The [config file](../config_files/input_data/eo_data.json) specifies 
+over AOI and selected time period. The [config file](../config_files/large_scale_processing/input_data/eo_data.json) specifies 
 the class, where the pipeline is implemented
 
 ```json
@@ -181,7 +181,7 @@ and a number of parameters for that class:
 
 // link to evalscript for datacube generation 
 // (this way it resolves paths correctly on cluster instances)
-"evalscript_path": "${import_path:example_package}/../config_files/input_data/evalscript.js",  
+"evalscript_path": "${import_path:example_package}/../config_files/large_scale_processing/input_data/evalscript.js",  
 
 // the output files from the Data Cube Engine
 "tiff_outputs": ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B8A", "B09", "B11", "B12", "QM"],
@@ -194,7 +194,7 @@ As per instructions in [`infrastructure.md`](infrastructure.md), to run this pip
 `eogrow-ray` command and specifying the cluster configuration and the pipeline config. For example: 
 
 ```bash
-eogrow-ray infrastructure/cluster.yaml config_files/input_data/eo_data.json --start
+eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/input_data/eo_data.json --start
 ```
 
 and then check the execution status by calling:
@@ -239,17 +239,17 @@ the pipeline; things like successful/failed tasks, timings, and similar can be o
 ### Pipeline 2 - Loading the Data Cube into `EOPatches`
 
 In the second pipeline, we restructure the output of the Data Cube into `EOPatches`. The config 
-to use is in `../config_files/input_data/batch_to_eopatch.json`, and we can try running the pipeline 
+to use is in `../config_files/large_scale_processing/input_data/batch_to_eopatch.json`, and we can try running the pipeline 
 like so (we can skip the `--start` if we still have the cluster running):
 
 ```bash
-eogrow-ray infrastructure/cluster.yaml config_files/input_data/batch_to_eopatch.json
+eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/input_data/batch_to_eopatch.json
 ```
 
 To test on single `EOPatch`, we can run 
 
 ```bash
-eogrow-ray infrastructure/cluster.yaml config_files/input_data/batch_to_eopatch.json -t 222
+eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/input_data/batch_to_eopatch.json -t 222
 ```
 
 The `EOPatch` index number can be retrieved from the grid:
@@ -279,7 +279,7 @@ This pipeline is a bit superfluous, as we could use evalscript in the first pipe
 compute directly the features we are interested in, but we have decided to keep it in order 
 to show how we can compute features from band indices outside of Data Cube processing engine.
 
-The config is written in [`features.json`](../config_files/input_data/features.json): 
+The config is written in [`features.json`](../config_files/large_scale_processing/input_data/features.json): 
 
 ```json
 // the pipeline class
@@ -305,7 +305,7 @@ The config is written in [`features.json`](../config_files/input_data/features.j
 Again, running the pipeline is one command-line call away (remember to add `--start` if your cluster is not yet running):
 
 ```bash
-eogrow-ray infrastructure/cluster.yaml config_files/input_data/features.json
+eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/input_data/features.json
 ```
 
 After this, the project folder will have changed; sub-folder with `features/{year}` has been added, containing `EOPATCHES` with `data/FEATURES` numpy array:
@@ -324,7 +324,7 @@ After this, the project folder will have changed; sub-folder with `features/{yea
 
 ### Pipeline 4 - Retrieving reference data
 
-In this example we will - for simplicity sake - use existing land cover classification result as training data. This pipeline will retrieve the data from Global Human Settlements Layer, which is a collection available through Sentinel Hub (see https://collections.sentinel-hub.com/global-human-settlement-layer-ghs-built-s2/). The config for this pipeline is available at [`reference_data.json`](../config_files/input_data/reference_data.json):
+In this example we will - for simplicity sake - use existing land cover classification result as training data. This pipeline will retrieve the data from Global Human Settlements Layer, which is a collection available through Sentinel Hub (see https://collections.sentinel-hub.com/global-human-settlement-layer-ghs-built-s2/). The config for this pipeline is available at [`reference_data.json`](../config_files/large_scale_processing/input_data/reference_data.json):
 
 
 ```json
@@ -349,13 +349,13 @@ In this example we will - for simplicity sake - use existing land cover classifi
 As you know by now, running the pipeline is one command-line call away (remember to add `--start` if your cluster is not yet running):
 
 ```bash
-eogrow-ray infrastructure/cluster.yaml config_files/input_data/reference_data.json
+eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/input_data/reference_data.json
 ```
 
 and similarly as before, you can test the pipeline for single `EOPatch`:
 
 ```bash
-eogrow-ray infrastructure/cluster.yaml config_files/input_data/reference_data.json -t 222
+eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/input_data/reference_data.json -t 222
 ```
 
 ### Pipelines 5 - ML cycle
@@ -368,7 +368,7 @@ model. We will sample the data we have and prepare a training and validation dat
 the pipeline to train a simple ML model.
 #### Sampling pipeline
 
-Sampling pipeline is defined in [`sampling.json`](../config_files/sampling/sampling.json) config file. 
+Sampling pipeline is defined in [`sampling.json`](../config_files/large_scale_processing/sampling/sampling.json) config file. 
 The most important parameters are:
 
 ```json
@@ -404,7 +404,7 @@ approaches, where `sample_size = [1,1]` as well as deep learning, where patchlet
 To run the pipeline, use 
 
 ```bash
-eogrow-ray infrastructure/cluster.yaml config_files/sampling/sampling.json
+eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/sampling/sampling.json
 ```
 
 #### Merging the samples for training
@@ -413,7 +413,7 @@ It is now time to merge the sampled pixel values into labels (`GHSL_120` feature
 (the three indices we've computed in pipeline #3) into train and validation datasets that we can 
 later on use to train a model.
 
-A simple [`merge_samples.json`](../config_files/sampling/merge_samples.json) config allows us to 
+A simple [`merge_samples.json`](../config_files/large_scale_processing/sampling/merge_samples.json) config allows us to 
 do precisely that:
 
 ```json
@@ -430,10 +430,10 @@ do precisely that:
 After running the pipeline with
 
 ```bash
-eogrow-ray infrastructure/cluster.yaml config_files/sampling/merge_samples.json
+eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/sampling/merge_samples.json
 ```
 
-the output will be in the `training-data` folder (remember, in the [`global_config`](../config_files/global_config.json) 
+the output will be in the `training-data` folder (remember, in the [`global_config`](../config_files/large_scale_processing/global_config.json) 
 we specify the `training` key will point to a folder named `training-data`):
 
 ```
@@ -446,7 +446,7 @@ we specify the `training` key will point to a folder named `training-data`):
 
 We are now ready to train the model. For this example, we have chosen a rather simplistic
 `LGBMRegressor` regression model, implemented in `RegressionTrainingPipeline`. The 
-[`training.json`](../config_files/model/training.json) config holds the following parameters:
+[`training.json`](../config_files/large_scale_processing/model/training.json) config holds the following parameters:
 
 ```json
 // the pipeline class
@@ -479,7 +479,7 @@ We are now ready to train the model. For this example, we have chosen a rather s
 The pipeline can be run with:
 
 ```bash
-eogrow-ray infrastructure/cluster.yaml config_files/model/training.json
+eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/model/training.json
 ```
 
 If all is ok, you will see something similar in the output:
@@ -506,7 +506,7 @@ That is why we will now - regardless of the model accuracy - run the predictions
 ### Pipeline 6 - Running predictions
 
 Configuration for the inference using the model we've just trained is stored in 
-[`prediction.json`](../config_files/model/prediction.json) config:
+[`prediction.json`](../config_files/large_scale_processing/model/prediction.json) config:
 
 ```json
 // the pipeline class 
@@ -528,7 +528,7 @@ Configuration for the inference using the model we've just trained is stored in
 
 Running 
 ```bash
-eogrow-ray infrastructure/cluster.yaml config_files/model/prediction.json
+eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/model/prediction.json
 ```
 
 we get predictions:
@@ -552,7 +552,7 @@ we still see that regardless of the model performance, and in particular for 120
 resolution, the results are not really bad. 
 
 The "Exporting maps" pipeline allows us to export maps for all `EOPatches` in one go. 
-The [`export_predictions.json`](../config_files/results/export_predictions.json) config 
+The [`export_predictions.json`](../config_files/large_scale_processing/results/export_predictions.json) config 
 allows us to define the following parameters:
 
 ```json
@@ -583,7 +583,7 @@ allows us to define the following parameters:
 
 Running 
 ```bash
-eogrow-ray infrastructure/cluster.yaml config_files/results/export_predictions.json
+eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/results/export_predictions.json
 ```
 
 we get one file per UTM zone of our grid:
@@ -610,7 +610,7 @@ through Sentinel Hub. The pipeline relies on Sentinel-Hub's Bring your own COGs
 need to be available on object storage, and the bucket itself has to be properly 
 [set up](https://docs.sentinel-hub.com/api/latest/api/byoc/#bucket-settings). 
 
-The [`ingest_to_sentinelhub.json`](../config_files/results/ingest_to_sentinelhub.json) config 
+The [`ingest_to_sentinelhub.json`](../config_files/large_scale_processing/results/ingest_to_sentinelhub.json) config 
 defines the parameters of the pipeline that will run the ingestion. It is a relatively simple 
 config, as most of the information needed is already encoded either in the managers or in 
 the exported tiffs.
@@ -637,7 +637,7 @@ the exported tiffs.
 After successfully running the pipeline with
 
 ```bash
-eogrow-ray infrastructure/cluster.yaml config_files/results/ingest_to_sentinelhub.json
+eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/results/ingest_to_sentinelhub.json
 ```
 
 we can see the collection among "My collections" on Sentinel Hub [dashboard](https://apps.sentinel-hub.com/dashboard):

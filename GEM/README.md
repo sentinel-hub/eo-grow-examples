@@ -42,7 +42,7 @@ pip install -r requirements.txt
 ```
 
 Then, we invite the user to:   
-  1) Head over to [`using eo-grow with Ray`](./docs/eogrow_ray.md) for details about full large-scale processing demo
+  1) Head over to [`using eo-grow with Ray`](./docs/scaling_eo_pipelines.md) for details about full large-scale processing demo
   2) open the [`example notebook`](./example_notebook.ipynb) for running small example on your laptop
   3) check [`continuous monitoring`](./docs/continuous_monitoring.md) for details about ongoing monitoring of large areas.
 

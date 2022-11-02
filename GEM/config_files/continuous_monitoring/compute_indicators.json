@@ -1,0 +1,14 @@
+{
+    "pipeline": "cpwm.pipelines.processing.NDWIFractionsPipeline",
+    "**global_config": "${config_path}/global_config_catalog.json",
+    "input_folder_key": "eopatches",
+    "output_folder_key": "eopatches",
+    "input_water_feature": ["data", "NDWI"],
+    "input_nominal_water_feature": ["data_timeless", "ESA_WorldCover_120"],
+    "water_class_value": 80,
+    "water_threshold": 0.1,
+    "invalid_data_value": -1.0,
+    "output_feature": ["vector", "WATER_PROFILE"],
+    "output_filename": "water-fraction.gpkg",
+    "geopackage_folder_key": "results"
+}

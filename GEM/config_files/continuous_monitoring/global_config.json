@@ -1,0 +1,25 @@
+{
+  "storage": {
+    "manager": "eogrow.core.storage.StorageManager",
+    "project_folder": "<your s3 bucket or local path>",
+    "structure": {
+      "catalog": "catalog",
+      "eopatches": "eopatches",
+      "results": "gpkgs"
+    }
+  },
+  "area": {
+    "manager": "eogrow.core.area.UtmZoneAreaManager",
+    "area_filename": "niger_aoi.geojson",
+    "patch_size_x": 30000,
+    "patch_size_y": 30000
+  },
+  "eopatch": {
+    "manager": "eogrow.core.eopatch.EOPatchManager"
+  },
+  "logging": {
+    "manager": "eogrow.core.logging.LoggingManager",
+    "save_logs": true,
+    "show_logs": true
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "pipeline": "eogrow.pipelines.download.DownloadEvalscriptPipeline",
+  "**global_config": "${config_path}/global_config_catalog.json",
+  "data_collection": {
+    "name": "BYOC_0b940c63-45dd-4e6b-8019-c3660b81b884",
+    "bands": [
+      {"name": "Map", "units": ["DN"], "output_types": ["uint8"]}
+    ]
+  },
+  "time_period": ["2019-01-01", "2021-01-01"],
+  "resolution": 120,
+  "resampling_type": "NEAREST",
+  "skip_existing": true,
+  "output_folder_key": "eopatches",
+  "features": [["data_timeless", "ESA_WorldCover_120"]],
+  "compress_level": 1,
+  "evalscript_path": "${config_path}/evalscript_ESA_WorldCover.js"
+}

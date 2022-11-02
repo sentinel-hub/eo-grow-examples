@@ -215,7 +215,7 @@ After the `cluster.yaml` file has been specified we can simply run it by calling
 specifying the cluster configuration and the pipeline config. For example: 
 
 ```bash
-eogrow-ray infrastructure/cluster.yaml config_files/sampling/sampling.json --start
+eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/sampling/sampling.json --start
 ```
 
 We can then check the execution status by calling:
