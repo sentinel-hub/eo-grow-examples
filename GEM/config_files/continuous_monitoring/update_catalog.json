@@ -1,0 +1,8 @@
+{
+    "pipeline": "cpwm.pipelines.catalog.CatalogPipeline",
+    "**global_config": "${config_path}/global_config_catalog.json",
+    "input_folder_key": "catalog",
+    "start_time": "2022-01-01",
+    "data_collection": "SENTINEL2_L2A",
+    "catalog_filter": "eo:cloud_cover < 70"
+}

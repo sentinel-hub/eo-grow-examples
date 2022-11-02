@@ -1,0 +1,18 @@
+{
+  "pipeline": "eogrow.pipelines.features.FeaturesPipeline",
+  "**global_config": "${config_path}/../global_config.json",
+  "input_folder_key": "data",
+  "output_folder_key": "features",
+  "bands_feature_name": "BANDS",
+  "data_preparation": {
+    "valid_data_feature_name": "QUALITY_MASK" // because we won't do any filtering this features plays no role
+  },
+  "ndis": {
+    "NDVI": [7,3],
+    "NDWI": [2,7],
+    "NDBI": [10,7]
+  },
+  "output_feature_name": "FEATURES",
+  "dtype": "float32",
+  "skip_existing": true
+}

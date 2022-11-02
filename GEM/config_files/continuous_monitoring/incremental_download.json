@@ -1,0 +1,15 @@
+{
+  "pipeline": "cpwm.pipelines.incremental_download.IncrementalDownloadPipeline",
+  "**global_config": "${config_path}/global_config_catalog.json",
+  "data_collection": "SENTINEL2_L1C",
+  "resolution": 120,
+  "resampling_type": "BILINEAR",
+  "skip_existing": true,
+  "output_folder_key": "eopatches",
+  "catalog_folder_key": "catalog",
+  "features": [["data", "NDWI"]],
+  "compress_level": 1,
+  "maxcc": 0.7,
+  "time_difference": null,
+  "evalscript_path": "${config_path}/evalscript_ndwi.js"
+}
