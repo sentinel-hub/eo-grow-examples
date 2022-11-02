@@ -72,7 +72,7 @@ is the baseline of the continuous monitoring service. It will run a Sentinel-Hub
 data collection specified in the config, looking for new data since the last time the pipeline was run. 
 During the first run, the process will collect all the dates from the specified starting time:
 
-```json
+```javascript
 {
   // the pipeline class handling the incremental updates 
   "pipeline": "cpwm.pipelines.catalog.CatalogPipeline",
@@ -129,7 +129,7 @@ The pipeline, configured in [`incremental_download.json`](../config_files/contin
 will - with each run - download only new data, based on the output of the updated catalog from the first 
 pipeline. In our case it will download the newly available Sentinel-2 NDWI data since the last catalog update:
 
-```json
+```javascript
 {
   // the pipeline class
   "pipeline": "cpwm.pipelines.incremental_download.IncrementalDownloadPipeline",
@@ -207,8 +207,16 @@ we update (or create if run for the first time) the GeoPackage with the observat
 The resulting GeoPackage could be used to calculate a very simplistic water indicators, as shown in the 
 figure on the top. 
 
+For instance:
+ * find where the number of valid pixels with water is significantly higher than the amount of nominal (valid)
+water pixels. If this jump is short in time, the area is possibly flooded.
+ * find where the number of valid pixels with water is significantly lower than the amount of nominal (valid) 
+water pixels. If this is happening on a long time period, it can point to droughts. 
 
-The resulting file can be downloaded from [here](https://cloud.sinergise.com/s/5SsxMrMQtyD6wGB). 
+Simply filtering the resulting GeoPackage by such criteria, one can create a new grid for a new `eo-grow` pipeline 
+that can be run on higher resolution (e.g. at full Sentinel-2 resolution of 10 m). Such approach represents the 
+"drill-down" mechanism of `eo-grow`.
+
 
 ### End to end execution
 
@@ -216,7 +224,7 @@ The sections above present a guide to the user, running each of the pipelines se
 deployment is extracted in an end-to-end[`continuous_monitoring_end2end.json`](../config_files/continuous_monitoring/continuous_monitoring_end2end.json) 
 config, where the pipelines are chained into one run:
 
-```json
+```javascript
 [
   {"**catalog_update": "${config_path}/update_catalog.json"},
   {"**incremental_download": "${config_path}/incremental_download.json"},
@@ -227,8 +235,8 @@ config, where the pipelines are chained into one run:
 
 which could then be run as a locally run cron job, or on AWS as an ECS job or even AWS Batch job by simply evoking 
 
-```
-$ eogrow config_files/continuous_monitoring/continuous_monitoring_end2end.json
+```bash
+eogrow config_files/continuous_monitoring/continuous_monitoring_end2end.json
 ```
 
 ## Conclusions

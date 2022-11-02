@@ -39,7 +39,7 @@ Storage manager defines the project structure on disk or on object storage (AWS 
 config language of `eo-grow` builds on top of `JSON` format, one can also make use of comments, 
 suitable to document the parts: 
 
-```json
+```javascript
 "storage": {
     // the StorageManager class to be used
     "manager": "eogrow.core.storage.StorageManager",
@@ -84,7 +84,7 @@ the AOI is covering part of West Africa region, as can be seen below:
 The AOI needs to be stored in `project_folder/input-data/`, and is specified as input parameter in the 
 AreaManager part of the global config:
 
-```json
+```javascript
 "area": {
     // the AreaManager class to be used
     "manager": "eogrow.core.area.BatchAreaManager",
@@ -111,7 +111,7 @@ AreaManager part of the global config:
 as we rely on the Data Cube processing engine for obtaining analysis ready data cube using Batch 
 Process API, the manager we use is:
 
-```json
+```javascript
 "eopatches": {
     // the eopatch manager class to be used
     "manager": "eogrow.core.eopatch.BatchTileManager"
@@ -124,7 +124,7 @@ Process API, the manager we use is:
 whole processing. In our case, we will be both logging and showing the errors (e.g. in standard output 
 stream):
 
-```json
+```javascript
 "logging": {
     // the logging manager class
     "manager": "eogrow.core.logging.LoggingManager",
@@ -163,13 +163,13 @@ In this first pipeline we will make use of Sentinel Hub Batch Processing API to 
 over AOI and selected time period. The [config file](../config_files/large_scale_processing/input_data/eo_data.json) specifies 
 the class, where the pipeline is implemented
 
-```json
+```javascript
 "pipeline": "eogrow.pipelines.download_batch.BatchDownloadPipeline"
 ```
 
 and a number of parameters for that class:
 
-```json
+```javascript
 // which storage manager key to use for output 
 "output_folder_key": "tiffs",
 "inputs": [{
@@ -281,7 +281,7 @@ to show how we can compute features from band indices outside of Data Cube proce
 
 The config is written in [`features.json`](../config_files/large_scale_processing/input_data/features.json): 
 
-```json
+```javascript
 // the pipeline class
 "pipeline": "eogrow.pipelines.features.FeaturesPipeline",
 
@@ -327,7 +327,7 @@ After this, the project folder will have changed; sub-folder with `features/{yea
 In this example we will - for simplicity sake - use existing land cover classification result as training data. This pipeline will retrieve the data from Global Human Settlements Layer, which is a collection available through Sentinel Hub (see https://collections.sentinel-hub.com/global-human-settlement-layer-ghs-built-s2/). The config for this pipeline is available at [`reference_data.json`](../config_files/large_scale_processing/input_data/reference_data.json):
 
 
-```json
+```javascript
   "pipeline": "eogrow.pipelines.download.DownloadEvalscriptPipeline",
   
   // specify parameters of the Sentinel Hub collection to be used
@@ -371,7 +371,7 @@ the pipeline to train a simple ML model.
 Sampling pipeline is defined in [`sampling.json`](../config_files/large_scale_processing/sampling/sampling.json) config file. 
 The most important parameters are:
 
-```json
+```javascript
 // the pipeline class to randomly sample blocks within EOPatch
 "pipeline": "eogrow.pipelines.sampling.BlockSamplingPipeline",
 
@@ -416,7 +416,7 @@ later on use to train a model.
 A simple [`merge_samples.json`](../config_files/large_scale_processing/sampling/merge_samples.json) config allows us to 
 do precisely that:
 
-```json
+```javascript
 // output the results into the folder accessible through StorageManager via key "training"
 "output_folder_key": "training",
 
@@ -448,7 +448,7 @@ We are now ready to train the model. For this example, we have chosen a rather s
 `LGBMRegressor` regression model, implemented in `RegressionTrainingPipeline`. The 
 [`training.json`](../config_files/large_scale_processing/model/training.json) config holds the following parameters:
 
-```json
+```javascript
 // the pipeline class
 "pipeline": "eogrow.pipelines.training.RegressionTrainingPipeline",
 
@@ -508,7 +508,7 @@ That is why we will now - regardless of the model accuracy - run the predictions
 Configuration for the inference using the model we've just trained is stored in 
 [`prediction.json`](../config_files/large_scale_processing/model/prediction.json) config:
 
-```json
+```javascript
 // the pipeline class 
 "pipeline": "eogrow.pipelines.prediction.RegressionPredictionPipeline",
 
@@ -555,7 +555,7 @@ The "Exporting maps" pipeline allows us to export maps for all `EOPatches` in on
 The [`export_predictions.json`](../config_files/large_scale_processing/results/export_predictions.json) config 
 allows us to define the following parameters:
 
-```json
+```javascript
 // the pipeline class
 "pipeline": "eogrow.pipelines.export_maps.ExportMapsPipeline",
 
@@ -615,7 +615,7 @@ defines the parameters of the pipeline that will run the ingestion. It is a rela
 config, as most of the information needed is already encoded either in the managers or in 
 the exported tiffs.
 
-```json
+```javascript
 // the pipeline class
 "pipeline": "eogrow.pipelines.byoc.IngestByocTilesPipeline",
 
