@@ -1,6 +1,6 @@
 ![GEM](figs/gem.png)
 
-## Continuous monitoring of large areas EO with `eo-grow`
+# Continuous monitoring of large areas EO with `eo-grow`
 
 In this part of the example we show a prof-of-concept of using Earth Observation data to 
 run continuous monitoring of an area. 
@@ -13,8 +13,8 @@ In GEM project, in the conflict pre-warning map use-case, the idea is the follow
 
 ![Conflict Pre-Warning Use-case](figs/conflict_pre-warning_use-case.png)
 
-The slide sequence describes:
- * The first map provides an overview of the countries most largely affected by floods in 
+The image sequence above delineates the following approach:
+ * The first image/map provides an overview of the countries most largely affected by floods in 
 the past years, which showcases Niger as a region heavily affected by such issues;
  * When focusing on Niger, thanks to the continuous monitoring of GEM, the areas prone to 
 flooding can be identified and anomalies can be extracted automatically, leading to a better 
@@ -29,8 +29,22 @@ In the example, presented here, we will make use of Sentinel-2 data at low-resol
 scan the area, create aggregated time series, and use the outcome as input to the next step, the 
 basic idea of the drill-down mechanism.
 
+## Table of Contents
 
-## Workflow
+- [Continuous monitoring of large areas EO with `eo-grow`](#continuous-monitoring-of-large-areas-eo-with-eo-grow)
+  - [Table of Contents](#table-of-contents)
+- [Workflow](#workflow)
+  - [Splitting the AoI](#splitting-the-aoi)
+  - [Update the catalog of available imagery](#update-the-catalog-of-available-imagery)
+  - [Download the reference data for nominal water levels](#download-the-reference-data-for-nominal-water-levels)
+  - [Incremental download of (Sentinel-2) data](#incremental-download-of-sentinel-2-data)
+  - [Characterise water levels and aggregate them into time-series](#characterise-water-levels-and-aggregate-them-into-time-series)
+  - [Characterise the events and drill-down](#characterise-the-events-and-drill-down)
+  - [End to end execution](#end-to-end-execution)
+- [Conclusions](#conclusions)
+
+
+# Workflow
 
 The implemented workflow will derive a simple indicator based on the Normalized Difference 
 Water Index (NDWI) from Sentinel-2 imagery and a nominal water reference derived from 
@@ -51,7 +65,7 @@ surface into a dataframe, again only for newly available imagery since the last 
 
 Following sections will detail each of the steps.
 
-### Splitting the AoI
+## Splitting the AoI
 
 This part is performed by `eo-grow` the first time (any) `eo-grow` config is being run. Subsequently, the 
 resulting grid is cached and reused in next steps. The figure shows how the AoI was split into a regular 
@@ -64,7 +78,7 @@ Just as in [scaling example](scaling_eo_pipelines.md), do not forget to copy the
 
 ![aoi](figs/aoi-split.png)
 
-### Update the catalog of available imagery
+## Update the catalog of available imagery
 
 The pipeline configured in [`update_catalog.json`](../config_files/continuous_monitoring/update_catalog.json) 
 is the baseline of the continuous monitoring service. It will run a Sentinel-Hub 
@@ -106,7 +120,7 @@ or, with Ray:
 eogrow-ray infrastructure/cluster.yaml config_files/continuous_monitoring/update_catalog.json
 ```
 
-### Download the reference data for nominal water levels
+## Download the reference data for nominal water levels
 
 The next step is to fetch the data that will be used as the nominal data, which will be used as a baseline; if we 
 start getting significantly higher fraction of pixels classified as water, then either the nominal data is wrong 
@@ -123,7 +137,7 @@ eogrow-ray infrastructure/cluster.yaml config_files/continuous_monitoring/downlo
 The important bit in the configuration is the `"skip_existing": true`, as it will skip the `EOPatches` that 
 already have the data downloaded. 
 
-### Incremental download of (Sentinel-2) data
+## Incremental download of (Sentinel-2) data
 
 The pipeline, configured in [`incremental_download.json`](../config_files/continuous_monitoring/incremental_download.json) 
 will - with each run - download only new data, based on the output of the updated catalog from the first 
@@ -171,7 +185,7 @@ the pipeline is to aggregate the results into time-series, and we do not need th
 this approach is the most sensible.
 
 
-### Characterise water levels and aggregate them into time-series
+## Characterise water levels and aggregate them into time-series
 
 In this pipeline we will estimate calculate the water levels by calculating the number of "water pixels"  
 classified from NDWI and reference data (ESA World cover), and then aggregate this information for each 
@@ -202,7 +216,7 @@ we update (or create if run for the first time) the GeoPackage with the observat
 |                   20 |                           27 | 2022-02-20 10:37:12 | eopatch-id-0000-col-0-row-11 | ... |
 
 
-### Characterise the events and drill-down 
+## Characterise the events and drill-down 
 
 The resulting GeoPackage could be used to calculate a very simplistic water indicators, as shown in the 
 figure on the top. 
@@ -218,7 +232,7 @@ that can be run on higher resolution (e.g. at full Sentinel-2 resolution of 10 m
 "drill-down" mechanism of `eo-grow`.
 
 
-### End to end execution
+## End to end execution
 
 The sections above present a guide to the user, running each of the pipelines separately. A proper service-like 
 deployment is extracted in an end-to-end[`continuous_monitoring_end2end.json`](../config_files/continuous_monitoring/continuous_monitoring_end2end.json) 
@@ -239,7 +253,7 @@ which could then be run as a locally run cron job, or on AWS as an ECS job or ev
 eogrow config_files/continuous_monitoring/continuous_monitoring_end2end.json
 ```
 
-## Conclusions
+# Conclusions
 
 This example is a proof of principle how one can construct a continuous monitoring system by regularly polling 
 the Sentinel-Hub service for new data, and then run a workflow (collection of pipelines) on the new data only. 

@@ -6,6 +6,18 @@ One of the  main capabilities of `eo-grow` is its ability to utilize low-cost AW
 processing framework to perform processing on a large scale. This document outlines the steps needed to set up the 
 infrastructure needed for the cloud processing. 
 
+## Table of contents
+
+- [Setting up the infrastructure for large-scale processing](#setting-up-the-infrastructure-for-large-scale-processing)
+  - [Table of contents](#table-of-contents)
+- [Main steps](#main-steps)
+  - [Creating an AWS AMI](#creating-an-aws-ami)
+  - [Pushing a docker image to ECR](#pushing-a-docker-image-to-ecr)
+    - [Creating an ECR repository](#creating-an-ecr-repository)
+    - [Pushing an image to the  ECR repository](#pushing-an-image-to-the--ecr-repository)
+  - [Preparing the cluster.yaml file](#preparing-the-clusteryaml-file)
+  - [Running en eo-grow pipeline on the cluster](#running-en-eo-grow-pipeline-on-the-cluster)
+
 # Main steps 
 
 The following main steps are needed to set up the infrastructure: 

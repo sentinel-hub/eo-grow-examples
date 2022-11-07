@@ -1,5 +1,4 @@
 ![GEM](figs/gem.png)
-
 ## Scaling up EO with `eo-grow` and `Ray`
 
 This readme contains information on running an end to end generic EO workflow using `eo-grow` with Ray clusters on AWS 
@@ -16,6 +15,30 @@ In the following sections, we will outline the pipelines one needs to run to get
  built-up classifier on scale. All the code and all the configuration files with input parameters 
  are available in this repository. Also, trying out parts of this example can be done locally, 
  without relying on `Ray`, AWS or computing cluster. 
+
+### Table of contents
+
+- [Scaling up EO with `eo-grow` and `Ray`](#scaling-up-eo-with-eo-grow-and-ray)
+  - [Table of contents](#table-of-contents)
+- [Prepare the project](#prepare-the-project)
+  - [Storage Manager](#storage-manager)
+  - [Area Manager](#area-manager)
+  - [EOPatch Manager](#eopatch-manager)
+  - [Logging Manager](#logging-manager)
+- [The example](#the-example)
+  - [Pipeline 1 - Creating the Data Cube](#pipeline-1---creating-the-data-cube)
+  - [Pipeline 2 - Loading the Data Cube into `EOPatches`](#pipeline-2---loading-the-data-cube-into-eopatches)
+  - [Pipeline 3 - Calculating features](#pipeline-3---calculating-features)
+  - [Pipeline 4 - Retrieving reference data](#pipeline-4---retrieving-reference-data)
+  - [Pipelines 5 - ML cycle](#pipelines-5---ml-cycle)
+    - [Sampling pipeline](#sampling-pipeline)
+    - [Merging the samples for training](#merging-the-samples-for-training)
+    - [Training pipeline](#training-pipeline)
+  - [Pipeline 6 - Running predictions](#pipeline-6---running-predictions)
+  - [Pipeline 7 - Exporting Maps](#pipeline-7---exporting-maps)
+  - [Pipeline 8 - Ingesting Maps to Sentinel Hub](#pipeline-8---ingesting-maps-to-sentinel-hub)
+- [Conclusion](#conclusion)
+
 
 ## Prepare the project
 
