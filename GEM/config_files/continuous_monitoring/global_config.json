@@ -1,7 +1,7 @@
 {
   "storage": {
     "manager": "eogrow.core.storage.StorageManager",
-    "project_folder": "/Users/mlubej/work/projects/sh-project/eo-grow-examples/GEM/project",
+    "project_folder": "<your s3 bucket or local path>",
     "structure": {
       "catalog": "catalog",
       "eopatches": "eopatches",
