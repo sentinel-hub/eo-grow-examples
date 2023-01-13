@@ -2,11 +2,13 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import Field, validator
 
-from ..tasks.data_availability import LoadOrCreateEOPatch, QueryCatalogAPI
 from eogrow.core.pipeline import Pipeline
+from eogrow.types import ExecKwargs, PatchList
 from eogrow.utils.validators import field_validator, parse_data_collection
 from eolearn.core import EONode, EOWorkflow, OverwritePermission, SaveTask, linearly_connect_tasks
 from sentinelhub import DataCollection, SentinelHubCatalog
+
+from ..tasks.data_availability import LoadOrCreateEOPatch, QueryCatalogAPI
 
 
 class CatalogPipeline(Pipeline):
@@ -58,22 +60,21 @@ class CatalogPipeline(Pipeline):
 
         return EOWorkflow(linearly_connect_tasks(load_or_create, query_catalog_task, save_task))
 
-    def get_execution_arguments(self, workflow: EOWorkflow) -> List[Dict[EONode, Dict[str, object]]]:
+    def get_execution_arguments(self, workflow: EOWorkflow, patch_list: PatchList) -> ExecKwargs:
         """Prepares execution arguments for each eopatch from a list of patches
 
         :param workflow: A workflow for which arguments will be prepared
         """
-        bbox_list = self.eopatch_manager.get_bboxes(eopatch_list=self.patch_list)
-        exec_args = []
+        exec_kwargs = {}
         nodes = workflow.get_nodes()
-        for name, bbox in zip(self.patch_list, bbox_list):
-            single_exec_dict: Dict[EONode, Dict[str, Any]] = {}
+        for name, bbox in patch_list:
+            patch_args: Dict[EONode, Dict[str, Any]] = {}
 
             for node in nodes:
                 if isinstance(node.task, LoadOrCreateEOPatch):
-                    single_exec_dict[node] = dict(eop_name=name, bbox=bbox, filesystem=self.storage.filesystem)
+                    patch_args[node] = dict(eop_name=name, bbox=bbox, filesystem=self.storage.filesystem)
                 if isinstance(node.task, SaveTask):
-                    single_exec_dict[node] = dict(eopatch_folder=name)
+                    patch_args[node] = dict(eopatch_folder=name)
 
-            exec_args.append(single_exec_dict)
-        return exec_args
+            exec_kwargs[name] = patch_args
+        return exec_kwargs

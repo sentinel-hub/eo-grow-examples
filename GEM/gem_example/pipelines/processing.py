@@ -5,6 +5,7 @@ import pandas as pd
 from pydantic import Field
 
 from eogrow.core.pipeline import Pipeline
+from eogrow.types import ExecKwargs, PatchList
 from eogrow.utils.fs import LocalFile
 from eogrow.utils.types import Feature
 from eolearn.core import EONode, EOWorkflow, FeatureType, LoadTask, OverwritePermission, SaveTask
@@ -127,7 +128,7 @@ class NDWIFractionsPipeline(Pipeline):
         finished_total, failed_total = [], []
 
         workflow = self.build_workflow()
-        exec_args = self.get_execution_arguments(workflow)
+        exec_args = self.get_execution_arguments(workflow, self.get_patch_list())
 
         finished, failed, execution_results = self.run_execution(workflow, exec_args)
         output = "extract_output"
@@ -149,21 +150,20 @@ class NDWIFractionsPipeline(Pipeline):
 
         return finished, failed
 
-    def get_execution_arguments(self, workflow: EOWorkflow) -> List[Dict[EONode, Dict[str, object]]]:
+    def get_execution_arguments(self, workflow: EOWorkflow, patch_list: PatchList) -> ExecKwargs:
         """Prepares execution arguments for each eopatch from a list of patches
 
         :param workflow: A workflow for which arguments will be prepared
         """
-        bbox_list = self.eopatch_manager.get_bboxes(eopatch_list=self.patch_list)
 
-        exec_args = []
+        exec_kwargs = {}
         nodes = workflow.get_nodes()
-        for name, bbox in zip(self.patch_list, bbox_list):
-            single_exec_dict: Dict[EONode, Dict[str, Any]] = {}
+        for name, _ in patch_list:
+            patch_args: Dict[EONode, Dict[str, Any]] = {}
 
             for node in nodes:
                 if isinstance(node.task, (SaveTask, LoadTask, ExtractOutputTask)):
-                    single_exec_dict[node] = dict(eopatch_folder=name)
+                    patch_args[node] = dict(eopatch_folder=name)
 
-            exec_args.append(single_exec_dict)
-        return exec_args
+            exec_kwargs[name] = patch_args
+        return exec_kwargs
