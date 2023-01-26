@@ -1,6 +1,6 @@
 {
-    "pipeline": "cpwm.pipelines.processing.NDWIFractionsPipeline",
-    "**global_config": "${config_path}/global_config_catalog.json",
+    "pipeline": "gem_example.pipelines.processing.NDWIFractionsPipeline",
+    "**global_config": "${config_path}/global_config.json",
     "input_folder_key": "eopatches",
     "output_folder_key": "eopatches",
     "input_water_feature": ["data", "NDWI"],

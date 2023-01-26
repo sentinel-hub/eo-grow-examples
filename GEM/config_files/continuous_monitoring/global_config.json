@@ -10,12 +10,13 @@
   },
   "area": {
     "manager": "eogrow.core.area.UtmZoneAreaManager",
-    "area_filename": "niger_aoi.geojson",
-    "patch_size_x": 30000,
-    "patch_size_y": 30000
-  },
-  "eopatch": {
-    "manager": "eogrow.core.eopatch.EOPatchManager"
+    "area": {
+      "filename": "niger_aoi.geojson"
+    },
+    "patch": {
+      "size_x": 30000,
+      "size_y": 30000
+    }
   },
   "logging": {
     "manager": "eogrow.core.logging.LoggingManager",

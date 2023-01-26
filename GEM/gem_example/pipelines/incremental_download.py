@@ -6,6 +6,7 @@ from typing import Any, Dict, List, Optional, Tuple
 from pydantic import Field
 
 from eogrow.pipelines.download import BaseDownloadPipeline, CommonDownloadFields, SessionLoaderType
+from eogrow.types import ExecKwargs, PatchList
 from eogrow.utils.types import Feature, FeatureSpec, Path
 from eolearn.core import EONode, EOPatch, EOWorkflow, FeatureType
 from eolearn.io import SentinelHubEvalscriptTask
@@ -90,34 +91,31 @@ class IncrementalDownloadPipeline(BaseDownloadPipeline):
 
         return calculate_time_period(existing_ts, catalog_ts)
 
-    def filter_patch_list(self, patch_list: List[str]) -> List[str]:
+    def filter_patch_list(self, patch_list: PatchList) -> PatchList:
         """EOPatches are filtered according to existence of specified output features"""
-        filtered_patch_list = []
-        for eopatch in patch_list:
+        filtered_patch_list: PatchList = []
+        for name, bbox in patch_list:
             try:
-                time_period = self._get_time_period(eopatch)
-                self.time_periods[eopatch] = time_period
-                filtered_patch_list.append(eopatch)
+                time_period = self._get_time_period(name)
+                self.time_periods[name] = time_period
+                filtered_patch_list.append((name, bbox))
             except ValueError:
                 continue
         return filtered_patch_list
 
-    def get_execution_arguments(self, workflow: EOWorkflow) -> List[Dict[EONode, Dict[str, object]]]:
+    def get_execution_arguments(self, workflow: EOWorkflow, patch_list: PatchList) -> ExecKwargs:
         """Adds required bbox and time_interval parameters for input task to the base execution arguments
 
         :param workflow: EOWorkflow used to download images
         """
-        exec_args = super().get_execution_arguments(workflow)
+        exec_args = super().get_execution_arguments(workflow, patch_list)
 
         download_node = workflow.get_node_with_uid(self.download_node_uid)
 
         if download_node is None:
             return exec_args
 
-        bbox_list = self.eopatch_manager.get_bboxes(eopatch_list=self.patch_list)
-
-        for index, (name, bbox) in enumerate(zip(self.patch_list, bbox_list)):
-            exec_args[index][download_node] = {"bbox": bbox}
-            exec_args[index][download_node]["time_interval"] = self.time_periods[name]
+        for name, bbox in patch_list:
+            exec_args[name][download_node] = {"bbox": bbox, "time_interval": self.time_periods[name]}
 
         return exec_args
