@@ -1,5 +1,5 @@
 # Land Cover Continuous Monitoring Service (LC-CMS) Workshop
-!["workshop_code/images/lccms_pipeline.PNG"](workshop_code/images/lccms_pipeline.png)
+!["workshop_code/images/lccms_pipeline.PNG"](notebook/images/lccms_pipeline.png)
 
 # A : Pre-Requirsites
 - Docker engine >= 10.0
@@ -24,7 +24,7 @@ In order to run this Notebook, we'll need some dataset on which we can perform L
 
 The downloaded dataset `paris_run` should have data for two years **2020 & 2021** with following structure : 
 
-!["workshop_code/images/paris_dataset_view.png"](workshop_code/images/paris_dataset_view.png)
+!["workshop_code/images/paris_dataset_view.png"](notebook/images/paris_dataset_view.png)
 
 ## A.2 : QGIS Template for Visualizing the results
 There is QGIS directly in the repository, which contains the project file => **lc_cms_reslut_viewer.qgz**. 
@@ -50,7 +50,7 @@ docker run -p 8888:8888 -v $(pwd):/gem-workshop -v $paris_run:/gem-workshop/pari
 
 **Note : `$paris_run` must be replaced by path to directly where you have downloaded the data as mentioned in section pre-requisites A.1**
 
-**If you're on windows You will have to replace $(pwd) with path to the checked out project directory.**
+**If you're on windows You will have to replace $(pwd) with path to the `LC_CMS_Workshop` in the checked out repository.**
 
 3. You can now go to the link http://localhost:8888 and enter the password as **`gem`**. Then, open the jupyter notebook at location notebook/LC-CMS_Workshop.ipynb.
 
