@@ -1,0 +1,46 @@
+{
+  "variables": {
+    "aoi_filename": "paris-aoi.geojson",
+    "project_dir": "/gem-workshop/paris_run/2020"
+//    "project_dir": "/Users/dhiman/Stories/gem-workshop/orleans_workdir"
+  },
+  "storage": {
+    "manager": "eogrow.core.storage.StorageManager",
+    "project_folder": "${var:project_dir}",
+//    "project_folder": "s3://gem_project_tomtom/lc_cms_run",
+//    "aws_profile": "lcms",
+    "structure": {
+      "batch_output": "batch_output",
+      "features": "eo-patch_features/raw_features",
+      "features_with_labels": "eo-patch_features/features_with_labels",
+      "predictions": "eo-patch_features/predictions",
+      "predictions_tiff": "predictions_tiff/raw",
+      "predictions_processed": "predictions_tiff/processed",
+      "serve": "serve",
+      "plots": "plots",
+      "dataset": "training_data",
+      "model": "model"
+    }
+  },
+  "area": {
+    "manager": "eogrow.core.area.BatchAreaManager",
+    "area_filename": "${var:aoi_filename}",
+    "resolution": "60",
+    // tiling grid information => https://docs.sentinel-hub.com/api/latest/api/batch/#tiling-grids
+    "tiling_grid_id": "0"
+//    "batch_id": "c1e443d3-9a06-443f-9d0c-d4ed74c51ea7"
+  },
+  "eopatch": {
+    "manager": "eogrow.core.eopatch.BatchTileManager"
+  },
+  "logging": {
+    "manager": "eogrow.core.logging.LoggingManager",
+    "save_logs": true,
+    "show_logs": true,
+    "stdout_log_packages": [
+      "eogrow",
+      "sentinelhub.api.batch"
+    ]
+  }
+//  "input_patch_file": "${import_path:landcover}/../resources/aoi/mea_48-dup_date_tiles.json"
+}
