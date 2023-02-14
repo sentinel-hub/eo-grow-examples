@@ -23,7 +23,6 @@ In the following sections, we will outline the pipelines one needs to run to get
 - [Prepare the project](#prepare-the-project)
   - [Storage Manager](#storage-manager)
   - [Area Manager](#area-manager)
-  - [EOPatch Manager](#eopatch-manager)
   - [Logging Manager](#logging-manager)
 - [The example](#the-example)
   - [Pipeline 1 - Creating the Data Cube](#pipeline-1---creating-the-data-cube)
@@ -112,32 +111,21 @@ AreaManager part of the global config:
     // the AreaManager class to be used
     "manager": "eogrow.core.area.BatchAreaManager",
 
-    // geojson file with the area of interest
-    "area_filename": "aoi_region.geojson",
+    // the geojson file with the area of interest
+    "area": {
+      "filename": "aoi_region.geojson"
+    },
 
-    // as we are using Batch Area Manager, this parameter specifies the tiling grid to be used, 
-    // see https://docs.sentinel-hub.com/api/latest/api/batch/#tiling-grids 
+    // as we are using Batch Area Manager, this parameter specifies the tiling grid to be used,
+    // see https://docs.sentinel-hub.com/api/latest/api/batch/#tiling-grids
     "tiling_grid_id": 2,
 
     // pixel resolution for the selected tiling grid
     "resolution": 120,
 
-    // buffer (in pixels) 
+    // buffer (in pixels)
     "tile_buffer_x": 10,
     "tile_buffer_y": 10
-}
-```
-
-### EOPatch Manager
-
-`EOPatch` manager takes care of listing `EOPatches` and handling their storage details. In our case, 
-as we rely on the Data Cube processing engine for obtaining analysis ready data cube using Batch 
-Process API, the manager we use is:
-
-```javascript
-"eopatches": {
-    // the eopatch manager class to be used
-    "manager": "eogrow.core.eopatch.BatchTileManager"
 }
 ```
 
