@@ -6,7 +6,7 @@ Analyzing Earth Observation (EO) data is complex and solutions often require cus
 
 ## Examples
 
-The examples in this repository are fully self contained in corresponding sub-directories. Each example has instructions on how to set-up a working environment, and (typically) an end-to-end notebook that user can tweak according to their needs. 
+The examples in this repository are fully self contained in corresponding sub-directories. Each example has instructions on how to set-up a working environment, and (typically) an end-to-end notebook that user can tweak according to their needs.
 
 Current examples are limited to [`GlobalEarthMonitor`](./GEM/README.md) spot-mode monitoring, but more will follow.
 
@@ -23,7 +23,7 @@ git clone https://github.com/sentinel-hub/eo-grow-examples.git
 
 The documentation of each example should be given in the corresponding `README.md` files. Documentations for the main building blocks of the examples can be found here:
  * [`eo-grow`](https://eo-grow.readthedocs.io/en/latest/)
- * [`eo-learn`](https://eo-learn.readthedocs.io/en/latest/),
+ * [`eo-learn`](https://eo-learn.readthedocs.io/en/latest/)
  * [`sentinelhub-py`](https://sentinelhub-py.readthedocs.io/en/latest/)
 
 
