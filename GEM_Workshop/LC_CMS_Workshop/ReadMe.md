@@ -1,7 +1,7 @@
 # Land Cover Continuous Monitoring Service (LC-CMS) Workshop
 !["workshop_code/images/lccms_pipeline.PNG"](notebook/images/lccms_pipeline.png)
 
-# A : Pre-Requirsites
+# A : Prerequisites
 - Docker engine >= 10.0
 - QGIS : To visualize the Predictions & Results. Template for the project is provided in this repository.
 - Local disk space ~ 3GB

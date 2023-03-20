@@ -22,8 +22,8 @@ class LoadTrainingPolygonsForEOPatch(EOTask):
     This task allows the load the training polygons for the EOPatch based on the training for the AOI
     """
 
-    def __init__(self, raster_feature: Tuple[FeatureType, str], train_polygons_filepath: str, pickeld_fs: bytes):
-        self.raster_feature = raster_feature
+    def __init__(self, vector_feature: Tuple[FeatureType, str], train_polygons_filepath: str, pickeld_fs: bytes):
+        self.vector_feature = vector_feature
         self.train_polygons_filepath = train_polygons_filepath
         self.pickled_fs = pickeld_fs
 
@@ -33,12 +33,9 @@ class LoadTrainingPolygonsForEOPatch(EOTask):
             - Query DB for the vector data
             - Filter to create train & val geometries based on the feat ids given
         """
-        # transform to WGS84 CRS
-        # fetch from database & rename `geom` column to `geometry` so that it can be used as EOLearn Vector feature
         LOGGER.info(f"Loading training polygons from file => {self.train_polygons_filepath}")
-        # save the resulting features
         filesystem = unpickle_fs(self.pickled_fs)
-        eopatch[self.raster_feature] = geopandas.read_file(filesystem.openbin(self.train_polygons_filepath))
+        eopatch[self.vector_feature] = geopandas.read_file(filesystem.openbin(self.train_polygons_filepath))
         return eopatch
 
 
@@ -50,7 +47,6 @@ class PrepareTrainingDataPipeline(Pipeline):
     class Schema(Pipeline.Schema):
         input_folder_key: str = Field(description='The storage manager key pointing to the EOPatch for the AOI.')
         output_folder_key: str = Field(description='The storage manager key pointing to the input folder containing EOPatch Data.')
-        # plots_folder_key: str = Field(description='The storage manager key pointing to the folder where plots/charts need to be stored.')
         dataset_folder_key: str = Field(
             description='The storage manager key pointing to the folder where prepared dataset should be stored.')
         no_data_value: int = Field(default=255, description='No data value for the resulting raster features')
@@ -81,7 +77,7 @@ class PrepareTrainingDataPipeline(Pipeline):
 
         # Load vector data from database per eopatch
         vector_labels_feature = FeatureType.VECTOR_TIMELESS, 'TRAIN_LABELS'
-        load_vector_data_task = LoadTrainingPolygonsForEOPatch(raster_feature=vector_labels_feature,
+        load_vector_data_task = LoadTrainingPolygonsForEOPatch(vector_feature=vector_labels_feature,
                                                                train_polygons_filepath=self.train_polygons_file,
                                                                pickeld_fs=pickle_fs(self.storage.filesystem))
 
