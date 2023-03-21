@@ -1,0 +1,40 @@
+{
+  "variables": {
+    "aoi_filename": "paris-aoi.geojson",
+    "project_dir": "/gem-workshop/paris_run/2020"
+  },
+  "storage": {
+    "manager": "eogrow.core.storage.StorageManager",
+    "project_folder": "${var:project_dir}",
+    "structure": {
+      "batch_output": "batch_output",
+      "features": "eo-patch_features/raw_features",
+      "features_with_labels": "eo-patch_features/features_with_labels",
+      "predictions": "eo-patch_features/predictions",
+      "predictions_tiff": "predictions_tiff/raw",
+      "predictions_processed": "predictions_tiff/processed",
+      "serve": "serve",
+      "plots": "plots",
+      "dataset": "training_data",
+      "model": "model"
+    }
+  },
+  "area": {
+    "manager": "eogrow.core.area.BatchAreaManager",
+    "area_filename": "${var:aoi_filename}",
+    "resolution": "60",
+    "tiling_grid_id": "0"
+  },
+  "eopatch": {
+    "manager": "eogrow.core.eopatch.BatchTileManager"
+  },
+  "logging": {
+    "manager": "eogrow.core.logging.LoggingManager",
+    "save_logs": true,
+    "show_logs": true,
+    "stdout_log_packages": [
+      "eogrow",
+      "sentinelhub.api.batch"
+    ]
+  }
+}

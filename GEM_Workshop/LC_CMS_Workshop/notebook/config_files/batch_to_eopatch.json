@@ -1,0 +1,20 @@
+{
+  "pipeline": "eogrow.pipelines.batch_to_eopatch.BatchToEOPatchPipeline",
+  "**global_config": "${config_path}/global_config.json",
+  "input_folder_key": "batch_output",
+  "output_folder_key": "features",
+  "mapping": [
+    {
+        "batch_files": ["B01.tif", "B02.tif", "B03.tif", "B04.tif", "B05.tif", "B06.tif", "B07.tif", "B08.tif", "B8A.tif", "B09.tif", "B11.tif", "B12.tif"],
+        "feature": ["data", "BANDS"]
+      },
+    {
+        "batch_files": ["valcount.tif"],
+        "feature": ["data_timeless", "VALCOUNT"]
+      }
+   ],
+  "remove_batch_data": false,
+  "skip_existing": false,
+  "userdata_feature_name": "userdata",
+  "userdata_timestamp_reader": "[scene['date'] for scene in json.loads(userdata['scenes'])]"
+}
