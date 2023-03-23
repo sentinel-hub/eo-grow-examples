@@ -4,4 +4,3 @@
   {"**esa_worldcover": "${config_path}/03_download_nominal_features.json"},
   {"**compute_fractions_to_gpkg": "${config_path}/04_compute_indicators.json"}
 ]
-

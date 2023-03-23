@@ -7,6 +7,7 @@ import geopandas
 import numpy as np
 from pydantic import Field
 
+from eogrow.core.pipeline import Pipeline
 from eolearn.core import (
     EOPatch,
     EOTask,
@@ -20,9 +21,6 @@ from eolearn.core import (
 )
 from eolearn.core.utils.fs import pickle_fs, unpickle_fs
 from eolearn.geometry.transformations import VectorToRasterTask
-
-from eogrow.core.pipeline import Pipeline
-from eogrow.core.storage import FS
 
 LOGGER = logging.getLogger()
 

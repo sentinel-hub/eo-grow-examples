@@ -25,4 +25,3 @@ ENTRYPOINT exec jupyter-lab --ip 0.0.0.0 --no-browser --port 8888 --notebook-dir
 # Set the container entrypoint
 #RUN chmod +x /gem-workshop/entrypoint.sh
 #ENTRYPOINT ["/gem-workshop/entrypoint.sh"]
-
