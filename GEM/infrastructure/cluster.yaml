@@ -13,7 +13,7 @@ docker:
 
 provider:
     type: aws
-    region: eu-central-1 # !! Can also be other regions, if you are running elsewhere !! 
+    region: eu-central-1 # !! Can also be other regions, if you are running elsewhere !!
     availability_zone: eu-central-1a,eu-central-1b,eu-central-1c
     cache_stopped_nodes: False  # Change for terminating instances
 
@@ -23,18 +23,18 @@ available_node_types:
         max_workers: 0
         node_config:
             InstanceType: m5.2xlarge
-            ImageId: << ID OF THE AMI CREATED IN THE FIRST STEP>> 
+            ImageId: << ID OF THE AMI CREATED IN THE FIRST STEP>>
             BlockDeviceMappings:
                 - DeviceName: /dev/sda1
                   Ebs:
-                      VolumeSize: 40        
+                      VolumeSize: 40
         resources: {"CPU": 1}
     ray.worker:
         min_workers: 0
         max_workers: 40  # Max number of workers of this type
         node_config:
             InstanceType: c5.large
-            ImageId:  << ID OF THE AMI CREATED IN THE FIRST STEP>> 
+            ImageId:  << ID OF THE AMI CREATED IN THE FIRST STEP>>
             InstanceMarketOptions:
                 MarketType: spot
             BlockDeviceMappings:

@@ -4,6 +4,7 @@ from setuptools import find_packages, setup
 
 VERSION = 1.0
 
+
 def parse_requirements(file):
     required_packages = []
     with open(os.path.join(os.path.dirname(__file__), file)) as req_file:
