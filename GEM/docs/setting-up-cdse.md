@@ -1,8 +1,8 @@
 ![GEM](figs/gem.png)
 
-# eo-grow on [Copernicus Data Space Ecosystem](https://dataspace.copernicus.eu/ecosystem) 
+# eo-grow on [Copernicus Data Space Ecosystem](https://dataspace.copernicus.eu/ecosystem)
 
-In this document we explain how to set-up an CDSE instance which you can utilize for running eo-grow workflows in the cloud. This allows us to 
+In this document we explain how to set-up an CDSE instance which you can utilize for running eo-grow workflows in the cloud. This allows us to
 
 ## Table of contents
 
@@ -10,17 +10,17 @@ In this document we explain how to set-up an CDSE instance which you can utilize
 
 ## Prerequisites
 
-* You need access to the CDSE [cloud computing platform](https://horizon.cloudferro.com/project/). You can [register](https://portal.creodias.eu/register.php) on CreoDIAS and use those credentials. 
+* You need access to the CDSE [cloud computing platform](https://horizon.cloudferro.com/project/). You can [register](https://portal.creodias.eu/register.php) on CreoDIAS and use those credentials.
 
 * !! TODO: Check how users can get access to this? !!
 
-  
 
-## Network setup 
 
-In order for the VM to be accessible from the internet, we need to add a floating IP to it.  This is done by following the [steps in the documentation](https://creodias.eu/-/how-to-add-floating-ip-to-vm-from-external2-pool-?inheritRedirect=true&redirect=%2Ffaq-networking).  
+## Network setup
 
-We will adapt the steps a bit in-order to make  the process stremlined for our usecase. Please follow the steps outlined below: 
+In order for the VM to be accessible from the internet, we need to add a floating IP to it.  This is done by following the [steps in the documentation](https://creodias.eu/-/how-to-add-floating-ip-to-vm-from-external2-pool-?inheritRedirect=true&redirect=%2Ffaq-networking).
+
+We will adapt the steps a bit in-order to make  the process stremlined for our usecase. Please follow the steps outlined below:
 
 1. **Create a new router**
 
@@ -50,15 +50,15 @@ Choose the name for the new network and click the **Next** button.
 
 ![](figs/cdse/router05-1.png)
 
-Choose Subnet name and set 
+Choose Subnet name and set
 
 Network Address: 192.168.1.0/24
 
- and 
+ and
 
 Gateway IP: 192.168.1.1
 
-and click the **Next** button. 
+and click the **Next** button.
 
 ![](figs/cdse/router06.png)
 
@@ -102,13 +102,13 @@ After adding Interface it will be visible in the Interface menu.
 
 We also need to adjust the default security group to allow connections via SSH. Navigate to Network -> Security Groups and the select Manage Rules.
 
-![](figs/cdse/sg01.png) 
+![](figs/cdse/sg01.png)
 
   Then select Add Rule
 
 ![](figs/cdse/sg02.png)
 
-And add `Ingress` permission to access port `22` from everywhere (`0.0.0.0/0`). Note that you can also restrict access by specifying a fixed IP if you have one. 
+And add `Ingress` permission to access port `22` from everywhere (`0.0.0.0/0`). Note that you can also restrict access by specifying a fixed IP if you have one.
 
 ![](figs/cdse/sg03.png)
 
@@ -122,11 +122,11 @@ Name the key pair with some name, i.e. `gem-example-key` and select `SSH Key`  a
 
 ![kp02](figs/cdse/kp02.png)
 
-## Creating a VM 
+## Creating a VM
 
-We are now ready to create our virtual machine. To do this, you can follow the steps outlined below. 
+We are now ready to create our virtual machine. To do this, you can follow the steps outlined below.
 
-Navigate to Compute  -> Instances - Launch Instance. 
+Navigate to Compute  -> Instances - Launch Instance.
 
 ![](figs/cdse/vm01.png)
 
@@ -134,27 +134,27 @@ first you need to set the instance name which can be whatever you want, in our c
 
 ![vm02](figs/cdse/vm02.png)
 
-the need to set the source, i.e. which base image we are using. Here, we first search for "Open" and choose the `Ubuntu 20.04 LTS OpenDataCube` image, since it already has a lot of the packages that we need available. We select it by click on t he up arrow button. 
+the need to set the source, i.e. which base image we are using. Here, we first search for "Open" and choose the `Ubuntu 20.04 LTS OpenDataCube` image, since it already has a lot of the packages that we need available. We select it by click on t he up arrow button.
 
 ![](figs/cdse/vm02-01.png)
 
-then we need to  choose  Flavour, which is the instance type. For this (lightweight) example we choose `hma.medium`which has 2 virtual CPUs and 16GB of RAM. In general this is chosen based on the computing demands of our eo-grow workflow. We select the instance type by clicling on the up arrow symbol as highlighted below. 
+then we need to  choose  Flavour, which is the instance type. For this (lightweight) example we choose `hma.medium`which has 2 virtual CPUs and 16GB of RAM. In general this is chosen based on the computing demands of our eo-grow workflow. We select the instance type by clicling on the up arrow symbol as highlighted below.
 
 ![](figs/cdse/vm03.png)
 
-then we need to select the network. We choose the `private_network_external2` that we created in the previous section. Again, this is selected by clicking on the up arrow symbol. 
+then we need to select the network. We choose the `private_network_external2` that we created in the previous section. Again, this is selected by clicking on the up arrow symbol.
 
 ![](figs/cdse/vm04.png)
 
-If we only have one security group (default), the security group will already be selected. If not, please use the security group that you modified in the previous section. 
+If we only have one security group (default), the security group will already be selected. If not, please use the security group that you modified in the previous section.
 
 ![](figs/cdse/vm05.png)
 
-If we only have one key pair created, it  will already be allocated. If not, please use a key pair of your choosing. Make sure that you have the key pair available, as it is needed to access the instance. 
+If we only have one key pair created, it  will already be allocated. If not, please use a key pair of your choosing. Make sure that you have the key pair available, as it is needed to access the instance.
 
 ![](figs/cdse/vm06.png)
 
-After setting all the required parameters, we can start the instance by click on the `Launch instance` button.  The spawned instance will be visible in the Compute -> Instances menu. 
+After setting all the required parameters, we can start the instance by click on the `Launch instance` button.  The spawned instance will be visible in the Compute -> Instances menu.
 
 ![](figs/cdse/vm07.png)
 
@@ -174,15 +174,15 @@ After selecting IP Address and Port click the **Associate** button..
 
 ![](figs/cdse/router15.png)
 
-If we navigate back to the Compute -> Instance we now see that the instance has an external IP allocated to it. This is the IP that we will use to connect to the instance. 
+If we navigate back to the Compute -> Instance we now see that the instance has an external IP allocated to it. This is the IP that we will use to connect to the instance.
 
 ![vm08](figs/cdse/vm08.png)
 
-## Connecting via SSH 
+## Connecting via SSH
 
-Note that these instructions are written for UNIX based systems. For Windows, a client like [PuTTY](https://www.putty.org) may be used to connect via SSH. 
+Note that these instructions are written for UNIX based systems. For Windows, a client like [PuTTY](https://www.putty.org) may be used to connect via SSH.
 
-It is recommend to create a SSH configuration which will enable us to connect. To do that add the following entry to the `~./ssh/config` file. Fill in the `Hostname` parameter with the external IP allocated in the previous step and fill in the `IdentityFile` parameter with the path to the keypair file that was created in the `Key Pairs` section. 
+It is recommend to create a SSH configuration which will enable us to connect. To do that add the following entry to the `~./ssh/config` file. Fill in the `Hostname` parameter with the external IP allocated in the previous step and fill in the `IdentityFile` parameter with the path to the keypair file that was created in the `Key Pairs` section.
 
 ```
 Host gem-cdse-example
@@ -194,21 +194,21 @@ Host gem-cdse-example
   IdentityFile <path_to_keypair_file>/gem-example-keypair.pem
 ```
 
-Once the entry has been added, we can connect to the instance with the below command. If you are prompted for the keys, write Yes and press Enter. 
+Once the entry has been added, we can connect to the instance with the below command. If you are prompted for the keys, write Yes and press Enter.
 
 ```bash
 ssh gem-cdse-example
 ```
 
-Once on the instance, we clone the eo-grow-repository, install the requirements  and then launch the jupyter-lab server on the 8090 port. 
+Once on the instance, we clone the eo-grow-repository, install the requirements  and then launch the jupyter-lab server on the 8090 port.
 
 ```bash
 git clone https://github.com/sentinel-hub/eo-grow-examples.git
 pip install -r eo-grow-examples/GEM/requirements.txt
-jupyter-lab --port 8090 
+jupyter-lab --port 8090
 ```
 
-Once the jupyter server starts, we will get a link in the terminal that we copy paste into our web browser. This allows us to access  the jupyter lab environment running on the VM. 
+Once the jupyter server starts, we will get a link in the terminal that we copy paste into our web browser. This allows us to access  the jupyter lab environment running on the VM.
 
 ![](figs/cdse/instance01.png)
 
@@ -216,6 +216,6 @@ Once the jupyter server starts, we will get a link in the terminal that we copy 
 
 Once on the notebook, we navigate to eo-grow-examples/GEM and open `example_notebook.ipynb`
 
-We now follow the instructions in the notebook and run as if it were local. 
+We now follow the instructions in the notebook and run as if it were local.
 
 ![](figs/cdse/example-notebook.png)
