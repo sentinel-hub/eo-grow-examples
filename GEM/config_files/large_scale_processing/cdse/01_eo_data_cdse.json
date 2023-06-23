@@ -1,0 +1,24 @@
+{
+  "pipeline": "eogrow.pipelines.download_batch.BatchDownloadPipeline",
+  "**global_config": "${config_path}/../global_config.json",
+  "output_folder_key": "tiffs",
+  "inputs": [
+    {
+      "data_collection": "SENTINEL2_L1C",
+      "time_period": ["2020-01-01", "2020-06-01"],
+      "resampling_type": "NEAREST",
+      "maxcc": 0.8,
+      "mosaicking_order": "leastRecent"
+    }
+  ],
+  "evalscript_path": "${import_path:gem_example}/../config_files/large_scale_processing/input_data/cdse/script_2020.js",  //this resolves paths correctly on cluster instances
+  "tiff_outputs": ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B8A", "B09", "B11", "B12", "QM"],
+  "save_userdata": true,
+  "monitoring_sleep_time": 60,
+  "batch_output_kwargs":{
+    "overwrite": true,
+    "skipExisting": false
+  },
+  "analysis_only": false,
+  //"batch_id": "" // should be added after it is created
+}

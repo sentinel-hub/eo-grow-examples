@@ -5,6 +5,8 @@
   "storage": {
     "manager": "eogrow.core.storage.StorageManager",
     "project_folder": "s3://<your bucket>", // the bucket needs to be properly configured for Sentinel Hub Batch API
+    "aws_profile": "cdse-gem-bucket",
+    "filesystem_kwargs": {"endpoint_url": "https://s3.waw3-1.cloudferro.com"},
     "structure": {
       "data": "data/${var:year}",  // uses the 2020 defined in "variables"
       "tiffs": "tiffs/${var:year}",
@@ -20,7 +22,7 @@
   "area": {
     "manager": "eogrow.core.area.BatchAreaManager",
     "area": {
-      "filename": "aoi_region.geojson"
+      "filename": "demo-aoi.geojson"
     },
     "tiling_grid_id": 2,
     "resolution": 120,
