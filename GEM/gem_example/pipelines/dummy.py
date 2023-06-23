@@ -8,7 +8,6 @@ import time
 from eolearn.core import (
     EONode,
     EOWorkflow,
-    LoadTask,
     EOTask
 )
 
@@ -18,7 +17,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 class DummyTask(EOTask):
-    def execute(self, eopatch): 
+    def execute(self): 
         time.sleep(60*5)
         print("I am finished.")
         return eopatch
@@ -42,19 +41,5 @@ class DummyPipeline(Pipeline):
         4. Applies post-processing, which prepares all output features
         5. Saves all relevant features (specified in _get_output_features)
         """
-        preparation_node = self.get_data_preparation_node()
-        dummy_task_node = EONode(DummyTask(), inputs=[preparation_node])
+        dummy_task_node = EONode(DummyTask(), inputs=[])
         return EOWorkflow.from_endnodes(dummy_task_node)
-
-    def get_data_preparation_node(self) -> EONode:
-        """Nodes that load, filter, and prepare a feature containing all bands
-
-        :return: A node with preparation tasks and feature for masking invalid data
-        """
-        load_task = LoadTask(
-            self.storage.get_folder(self.config.input_folder_key),
-            filesystem=self.storage.filesystem,
-            lazy_loading=True,
-        )
-        end_node = EONode(load_task)
-        return end_node
