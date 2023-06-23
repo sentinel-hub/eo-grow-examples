@@ -14,5 +14,5 @@
   "skip_existing": false,
   "output_folder_key": "raster_reference",
   "features": [["data_timeless", "GHSL_120"]],
-  "evalscript_path": "${import_path:gem_example}/../config_files/input_data/evalscript_ghsl.js"
+  "evalscript_path": "${import_path:gem_example}/../config_files/large_scale_processing/input_data/evalscript_ghsl.js"
 }
