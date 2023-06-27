@@ -1,6 +1,6 @@
 {
   "pipeline": "eogrow.pipelines.download_batch.BatchDownloadPipeline",
-  "**global_config": "${config_path}/../global_config.json",
+  "**global_config": "${config_path}/../../global_config.json",
   "output_folder_key": "tiffs",
   "inputs": [
         {
@@ -9,7 +9,7 @@
             "mosaicking_order": "leastRecent"
         }
   ],
-  "evalscript_path": "${import_path:gem_example}/../config_files/input_data/evalscript.js",  //this resolves paths correctly on cluster instances
+  "evalscript_path": "${config_path}/evalscript.js",  //this resolves paths correctly on cluster instances
   "tiff_outputs": ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B8A", "B09", "B11", "B12", "QM"],
   "save_userdata": true,
   "monitoring_sleep_time": 60,
@@ -17,6 +17,6 @@
     "overwrite": true,
     "skipExisting": false
   },
-  "analysis_only": false,
+  "analysis_only": true,
   "batch_id": "" // should be added after it is created
 }
