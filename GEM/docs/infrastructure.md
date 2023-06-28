@@ -45,7 +45,7 @@ The container needs to be created in the `WAW3-1`  region.  Creating a containe
 
 then just give it a name of your choice and select  Submit. We recommend that you leave the access as "Not public" unless you are sure that you want to share the container contents publicly.
 
-![](/Users/nvesel/Documents/code/eo-grow-examples/GEM/docs/figs/cdse/container-details.png)
+![](figs/cdse/container-details.png)
 
 After the container has been created, we need to create EC2 Credentials which we will use to access the bucket. The instructions on how this can be done are available [here](https://creodias.eu/-/how-to-generate-ec2-credentials-?redirect=https%3A%2F%2Fcreodias.eu%2Fknowledgebase%3Fp_p_id%3D3%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26_3_redirect%3D%252Fknowledgebase%253Fp_p_id%253D3%2526p_p_lifecycle%253D0%2526p_p_state%253Dnormal%2526p_p_mode%253Dview%2526_3_groupId%253D0%26_3_keywords%3Dec2%26_3_groupId%3D0%26_3_struts_action%3D%252Fsearch%252Fsearch&inheritRedirect=true). The created access and secret keys will be needed in the next steps.
 
@@ -474,8 +474,8 @@ worker_nodes: {}
 
 ## Running en eo-grow pipeline on the cluster
 
-After the `cluster.yaml` file has been specified we can simply run it by calling the `eogrow-ray` command and
-specifying the cluster configuration and the pipeline config. This works the same regardless we are using CDSE or AWS cluster.
+Regardless where we are running the eo-grow pipeline (be it on [AWS](#aws) or [CDSE](#copernicus-data-space-ecosystem)),  once the `cluster.yaml` file has been specified we can simply run the pipeline by calling the `eogrow-ray` command, 
+specifying the cluster configuration and the pipeline config:
 
  For example:
 
