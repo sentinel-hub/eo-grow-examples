@@ -171,7 +171,7 @@ and give you the command-line instructions to test and run the pipeline.
 ### Pipeline 1 - Creating the Data Cube
 
 In this first pipeline we will make use of Sentinel Hub Batch Processing API to request satellite data
-over AOI and selected time period. The [config file](../config_files/large_scale_processing/input_data/eo_data.json) specifies
+over AOI and selected time period. The [config file](../config_files/large_scale_processing/input_data/aws/01_eo_data.json) specifies
 the class, where the pipeline is implemented
 
 ```javascript
@@ -199,13 +199,21 @@ and a number of parameters for that class:
 ```
 
 As you can see, we will be retrieving data from 120m global mosaic of Sentinel-2 data, a static data
-cube created specifically to facilitate large scale experiments.
+cube created specifically to facilitate large scale experiments. If we are running on CDSE, where the 120m Global Mosaic is not available, we can create the 120m global mosaic on-the-fly using a custom evalscript provided in the folder. We run with [this config file]([config file](../config_files/large_scale_processing/input_data/cdse/01_eo_data.json) ).
+
+
+
+
+
+
+
+
 
 As per instructions in [`infrastructure.md`](infrastructure.md), to run this pipeline, call the
 `eogrow-ray` command and specifying the cluster configuration and the pipeline config. For example:
 
 ```bash
-eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/input_data/eo_data.json --start
+eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/input_data/aws/01_eo_data.json --start
 ```
 
 and then check the execution status by calling:
@@ -250,17 +258,17 @@ the pipeline; things like successful/failed tasks, timings, and similar can be o
 ### Pipeline 2 - Loading the Data Cube into `EOPatches`
 
 In the second pipeline, we restructure the output of the Data Cube into `EOPatches`. The config
-to use is in `../config_files/large_scale_processing/input_data/batch_to_eopatch.json`, and we can try running the pipeline
+to use is in `../config_files/large_scale_processing/input_data/aws/02_batch_to_eopatch.json`. If we are running on CDSE, we run the following config file. `../config_files/large_scale_processing/input_data/cdse/02_batch_to_eopatch.json`. All the pipelines that follow are now the same regardless if we are using CDSE or AWS processing. We can try running the pipeline
 like so (we can skip the `--start` if we still have the cluster running):
 
 ```bash
-eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/input_data/batch_to_eopatch.json
+eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/input_data/aws/02_batch_to_eopatch.json
 ```
 
 To test on single `EOPatch`, we can run
 
 ```bash
-eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/input_data/batch_to_eopatch.json -t 222
+eogrow-ray infrastructure/cluster.yaml config_files/large_scale_processing/input_data/aws/02_batch_to_eopatch.json -t 222
 ```
 
 The `EOPatch` index number can be retrieved from the grid:
