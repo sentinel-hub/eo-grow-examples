@@ -12,9 +12,6 @@ In this document we explain how to set-up an CDSE instance which you can utilize
 
 * You need access to the CDSE [cloud computing platform](https://horizon.cloudferro.com/project/). You can [register](https://portal.creodias.eu/register.php) on CreoDIAS and use those credentials.
 
-* !! TODO: Check how users can get access to this? !!
-
-
 
 ## Network setup
 
