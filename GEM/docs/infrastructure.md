@@ -474,7 +474,7 @@ worker_nodes: {}
 
 ## Running en eo-grow pipeline on the cluster
 
-Regardless where we are running the eo-grow pipeline (be it on [AWS](#aws) or [CDSE](#copernicus-data-space-ecosystem)),  once the `cluster.yaml` file has been specified we can simply run the pipeline by calling the `eogrow-ray` command, 
+Regardless where we are running the eo-grow pipeline (be it on [AWS](#aws) or [CDSE](#copernicus-data-space-ecosystem)), once the `cluster.yaml` file has been specified we can simply run the pipeline by calling the `eogrow-ray` command,
 specifying the cluster configuration and the pipeline config:
 
  For example:
@@ -489,7 +489,7 @@ We can then check the execution status by calling:
 ray attach infrastructure/cluster.yaml
 ```
 
-which should open up the console.  Once the execution has finished, the workers are shut down automatically, but we need
+which should open up the console. Once the execution has finished, the workers are shut down automatically, but we need
 to shut down the head node manually by calling `ray down` and specifying the `cluster.yaml` configuration. For example:
 
 ```bash
