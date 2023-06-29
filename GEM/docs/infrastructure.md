@@ -2,7 +2,7 @@
 
 # Setting up the infrastructure for large-scale processing
 
-One of the  main capabilities of `eo-grow` is its ability to utilize cloud providers for performing processing on a large scale. We can either use the capabilities of the [CDSE]( https://dataspace.copernicus.eu/ecosystem) platform to create instances and delegate processing to the cloud or we can utilize  AWS (or other commercial cloud providers) spot instances together with the `Ray`processing framework to perform processing on a large scale. This document outlines the steps needed to set up the infrastructure needed for the cloud processing on CDSE and on AWS.
+One of the  main capabilities of `eo-grow` is its ability to utilize cloud providers for performing processing on a large scale. We can either use the capabilities of the [CDSE](https://dataspace.copernicus.eu/ecosystem) platform to create instances and delegate processing to the cloud or we can utilize  AWS (or other commercial cloud providers) spot instances together with the `Ray` processing framework to perform processing on a large scale. This document outlines the steps needed to set up the infrastructure needed for the cloud processing on CDSE and on AWS.
 
 ## Table of contents
 
@@ -116,19 +116,19 @@ pprint(result["Policy"])
 
 #### Creating instances on CDSE
 
-The majority of the procedure is already explain in the [eo-grow on Copernicus Data Space Ecosystem](setting-up-cdse.md)  notebook. If you did not go through that notebook, please do so. The prerequisites for this procedure is to:
+The majority of the procedure is already explain in the [eo-grow on Copernicus Data Space Ecosystem](setting_up_cdse.md)  notebook. If you did not go through that notebook, please do so. The prerequisites for this procedure is to:
 
-1) Setup the network so it can be accessible from the internet. [Link to instructions](setting-up-cdse.md#network-setup)
+1) Setup the network so it can be accessible from the internet. [Link to instructions](setting_up_cdse.md#network-setup)
 
-2) Setup the security groups.  [Link to instructions](setting-up-cdse.md#security-groups)
+2) Setup the security groups.  [Link to instructions](setting_up_cdse.md#security-groups)
 
    - **For Ray, we  we need to add another Ingress rule to make ALL the ports accessible from everywhere. See screenshot below. **
 
      ![](figs/cdse/ray-ports.png)
 
-3. Create a Key Pair. [Link to instructions](setting-up-cdse.md#key-pairs)
+3. Create a Key Pair. [Link to instructions](setting_up_cdse.md#key-pairs)
 
-4. Create instances and assign public IPs to the istances.. [Link to instructions](setting-up-cdse.md#creating-a-vm)
+4. Create instances and assign public IPs to the istances. [Link to instructions](setting_up_cdse.md#creating-a-vm)
 
    - The instructions are made for creating one instance. We can use eo-grow with more instances for faster processing. To create multiple instances at once, you need to adjust the `Count`  window in the instance creation window.  Note that we need to assign the public IPs for each instance separately.
 
@@ -142,7 +142,7 @@ The user needs to fill out the following:
 
 * `provider.head_ip` : Fill it with the IP of the head node. The head node can be chosen arbitrarily from the instances that were created in the previous step.
 * `provider.worker_ips`: Fill it with the list of of worker IPs, i.e. the rest of the instances that were created in the previous step.
-* `auth.ssh_private_key`: Provide a local path to your [Key Pair](setting-up-cdse.md#key-pairs).
+* `auth.ssh_private_key`: Provide a local path to your [Key Pair](setting_up_cdse.md#key-pairs).
 * `setup_commands`: You need to insert your access and secret keys into the last command. The command will create a default profile that will be utilized by eo-grow storage manager.
 
 The entries that need to be filled out are also marked in the template with `<>`
@@ -165,6 +165,8 @@ provider:
     type: local
     head_ip: <IP of the head node>
     worker_ips: [<LIST OF WORKER IPS>]
+
+
 
 # How Ray will authenticate with newly launched nodes.
 auth:
@@ -407,6 +409,7 @@ docker:
     image: "<<The Docker image URL to the ECR (as specified in the section above)>>
     container_name: "gem-example"
     pull_before_run: True
+
 
 provider:
     type: aws

@@ -6,11 +6,28 @@ In this document we explain how to set-up an CDSE instance which you can utilize
 
 ## Table of contents
 
-[TOC]
+- [eo-grow on Copernicus Data Space Ecosystem](#eo-grow-on-copernicus-data-space-ecosystem)
+  - [Table of contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [Network setup](#network-setup)
+  - [Security groups](#security-groups)
+  - [Key Pairs](#key-pairs)
+  - [Creating a VM](#creating-a-vm)
+  - [Connecting via SSH](#connecting-via-ssh)
+  - [Running the notebook](#running-the-notebook)
+
 
 ## Prerequisites
 
-* You need access to the CDSE [cloud computing platform](https://horizon.cloudferro.com/project/). You can [register](https://portal.creodias.eu/register.php) on CreoDIAS and use those credentials.
+You need access to the CDSE [cloud computing platform](https://horizon.cloudferro.com/). You can [register](https://portal.creodias.eu/register.php) on CreoDIAS 2.0 and use those credentials.
+
+CREODIAS 2.0 is the first commercial element of the Copernicus Data Space Ecosystem thus provides commercial services oferred by the entire Copernicus Data Space Ecosystem consortium team consisting of: T-Systems as a leader, CloudFerro, Sinergise, VITO, DLR, ACRI-ST, and RHEA.
+
+When logging into your Openstack Horizon or Billing account for the first time, you will be asked to set up 2FA (see [guide](https://creodias.docs.cloudferro.com/en/latest/gettingstarted/Two-Factor-Authentication-for-Creodias-Site.html#which-one-to-use-freeotp-or-google-authenticator))
+
+ * Openstack horizon link: https://horizon.cloudferro.com/
+ * Billing account link: https://new.cloudferro.com/login
+
 
 
 ## Network setup
