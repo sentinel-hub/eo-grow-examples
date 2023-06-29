@@ -116,7 +116,7 @@ pprint(result["Policy"])
 
 #### Creating instances on CDSE
 
-The majority of the procedure is already explain in the [eo-grow on Copernicus Data Space Ecosystem](setting-up-cdse.md)  notebook. If you did not go through that notebook, please do so. The prerequisites for this procedure is to:
+The majority of the procedure is already explain in the [eo-grow on Copernicus Data Space Ecosystem](setting_up_cdse.md)  notebook. If you did not go through that notebook, please do so. The prerequisites for this procedure is to:
 
 1) Setup the network so it can be accessible from the internet. [Link to instructions](setting-up-cdse.md#network-setup)
 
